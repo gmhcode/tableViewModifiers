@@ -77,12 +77,13 @@ class ViewController: UIViewController {
         let food = OrderItem(name: "food \(orders.count)", isMainOrder: true)
         OrderItemController.shared.orders.append(food)
         
-        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, uuid: steak2!.uuid)
-        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, uuid: potato!.uuid)
+        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, uuid:  steak2!.uuid)
+        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, uuid:  potato!.uuid)
         cheese = Modifier(name: "cheese", isModifierFor: potato!, mainOrder: food, uuid: cheese!.uuid)
-        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, uuid: baked!.uuid)
-        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, uuid: burned!.uuid)
-        potato4 = Modifier(name: "fries", isModifierFor: cheese!, mainOrder: food, uuid: potato4!.uuid)
+        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, uuid:  baked!.uuid)
+        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, uuid:  burned!.uuid)
+        potato4 = Modifier(name: "fries", isModifierFor: burned!, mainOrder: food, uuid:  potato4!.uuid)
+//        potato3 = Modifier(name: "sauce", isModifierFor: potato4!, mainOrder: food)
         
         
         
@@ -91,29 +92,37 @@ class ViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food)
         ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food)
         ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food)
-        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: cheese!, mainOrder: food)
+        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food)
+//        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato4!, mainOrder: food)
         
         let indexPath = IndexPath(row: orders.count - 1, section: 0)
 //        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         
         tableView.reloadData()
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
     
     
     
-    @IBAction func button1Tapped(_ sender: Any) {
+    @IBAction func modForPotatoTapped(_ sender: Any) {
         guard let selectedOrder = selectedOrder else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-        
-        
-        potato2 = Modifier(name: "super", isModifierFor: cheese!, mainOrder: selectedOrder, uuid: potato2!.uuid)
-        ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: cheese!, mainOrder: selectedOrder)
+//        print("🎢\(cheese!.name) \(selectedOrder.uuid)  +++    + \(cheese!.uuid)")
+        print("🎢\(ModifierController.shared.modDictionary.values.count)")
+//        ModifierController.shared.modDictionary[selectedOrder.name + potato4!.uuid]
+        potato2 = Modifier(name: "super", isModifierFor: ModifierController.shared.modDictionary[selectedOrder.name + potato4!.uuid]!, mainOrder: selectedOrder)
+        ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: ModifierController.shared.modDictionary[selectedOrder.name + potato4!.uuid]!, mainOrder: selectedOrder)
         tableView.reloadData()
         
+        let index = orders.firstIndex(of: selectedOrder)!
+        let indexPath = IndexPath(row: index, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         
         
         
     }
     
+    @IBAction func modForPotato2Tapped(_ sender: Any) {
+    }
     
     
     
@@ -181,6 +190,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
+//        let cell = UITableViewCell()
+        if orders[indexPath.row].isMainOrder == false{
+            return 20
+        }
+        
         return defaultCellHeight
     }
     

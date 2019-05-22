@@ -12,15 +12,7 @@ class OrderItem{
     
     //    var uuid : UUID?
     var modifiers : [Modifier]?
-//    {
-//        didSet{
-//            if isMainOrder == true {
-//                if modifiers != nil {
-//                    
-//                }
-//            }
-//        }
-//    }
+
     var uuid : String
     let name : String
     var text : String = ""

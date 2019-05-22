@@ -18,13 +18,18 @@ class Modifier: OrderItem {
         self.isModifierFor = isModifierFor
         self.mainOrder = mainOrder
         super.init(name: name, isMainOrder: false)
-        self.uuid = uuid
-        //        self.uuid = uuid
+        // vv doing this for equatable purposes only
         
+        self.uuid = uuid
+        self.text = mainOrder.uuid + isModifierFor.uuid + self.uuid
+
+        ModifierController.shared.modDictionary[mainOrder.name + self.uuid] = self
 //        mainOrder.totalMods.append(self)
         
         
         self.text.append("\n\(name) is modifier for \(String(describing: isModifierFor.name)) \n")
         
     }
+    
 }
+
