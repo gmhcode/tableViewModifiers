@@ -14,24 +14,57 @@ class ModifierController {
     var totalMods : [Modifier] = []
     var modDictionary: [String : OrderItem] = [:]
     
+    
+    
+    
+    func removeMod(uuid: String, fromModifier: Modifier){
+        var orderToRemove = OrderItem(name: "hold", isMainOrder: true, price: 0.00)
+        var modToRemove = Modifier(name: "a", isModifierFor: orderToRemove, mainOrder: orderToRemove, price: 0.00)
+        
+        
+        
+        if fromModifier.isMainOrder == false && fromModifier.modifiers.count > 0 {
+            
+            
+            
+            for i in fromModifier.modifiers {
+                
+                if i.uuid == uuid {
+                    modToRemove = i
+                    let index = fromModifier.modifiers.firstIndex(of: modToRemove)!
+                    fromModifier.modifiers.remove(at: index)
+                    
+                    if fromModifier.mainOrder.totalMods.contains(modToRemove){
+                        let totalIndex = fromModifier.mainOrder.totalMods.firstIndex(of: modToRemove)!
+                        fromModifier.mainOrder.totalMods.remove(at: totalIndex)
+                    }
+                    
+                    if OrderItemController.shared.orders.contains(modToRemove){
+                        let ordersIndex = OrderItemController.shared.orders.firstIndex(of: modToRemove)!
+                        OrderItemController.shared.orders.remove(at: ordersIndex)
+                    }
+                    break
+                    
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func addModifierToOrder(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem){
         
         
-//        modDictionary[mainOrder.name + isModifierFor.uuid] = isModifierFor
-        
-        
-        
-        
-//        print("❇️\(isModifierFor.name) \(mainOrder.uuid + " +++   " + isModifierFor.uuid)")
 
-        
-        
-        if isModifierFor.modifiers == nil {
-            isModifierFor.modifiers = [modifier] as? [Modifier]
-
-        } else {
-            isModifierFor.modifiers?.append(modifier as! Modifier)
-        }
+            isModifierFor.modifiers.append(modifier as! Modifier)
         
         
         if isModifierFor != mainOrder {
@@ -40,9 +73,10 @@ class ModifierController {
                     
                     if i == isModifierFor {
                         let index = mainOrder.totalMods.firstIndex(of: isModifierFor as! Modifier)!
-                        mainOrder.totalMods.insert(modifier as! Modifier, at: index)
-                        mainOrder.totalMods.remove(at: index + 1)
-                        mainOrder.totalMods.insert(isModifierFor as! Modifier, at: index)
+//                        mainOrder.totalMods.insert(modifier as! Modifier, at: index)
+//                        mainOrder.totalMods.remove(at: index + 1)
+//                        mainOrder.totalMods.insert(isModifierFor as! Modifier, at: index)
+                        mainOrder.totalMods.append(modifier as! Modifier)
                         
                         
                         print("🔵\(i.name)")
@@ -55,33 +89,38 @@ class ModifierController {
                     for i in OrderItemController.shared.orders {
                         if i == isModifierFor {
                             let index2 = OrderItemController.shared.orders.firstIndex(of: isModifierFor as! Modifier)!
-                            OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2)
-                            //                        index2 = OrderItemController.shared.orders.firstIndex(of: isModifierFor as! Modifier)!
-                            OrderItemController.shared.orders.remove(at: index2 + 1)
-                            OrderItemController.shared.orders.insert(isModifierFor, at: index2)
-                            print("🔴\(i.name)")
-                            
+                            if isModifierFor.modifiers.count > 0 {
+                                OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
+                            } else {
+                                OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2)
+                                OrderItemController.shared.orders.remove(at: index2 + 1)
+                                OrderItemController.shared.orders.insert(isModifierFor, at: index2)
+                                print("🔴\(i.name)")
+                            }
                         }
                     }
                 }
-                
-                
-                
-                
-                
-                
             }
         } else {
             mainOrder.totalMods.append(modifier as! Modifier)
-            OrderItemController.shared.orders.append(modifier as! Modifier)
+
+            for i in OrderItemController.shared.orders {
+                if i == isModifierFor {
+                    
+                    let index2 = OrderItemController.shared.orders.firstIndex(of: isModifierFor)!
+                    
+                    if isModifierFor.totalMods.count > 0 {
+                        OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.totalMods.count )
+                    } else {
+                        OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2)
+                        OrderItemController.shared.orders.remove(at: index2 + 1)
+                        OrderItemController.shared.orders.insert(isModifierFor, at: index2)
+                        print("🔴\(i.name)")
+                    }
+                }
+            }
         }
-//        print("🔵\(modifier.name)      \(modifier.uuid)")
-//        print("🔵\(index2)      \(index)")
-        
-//        totalMods.append(newMod)
     }
-    
-    
     
     
     

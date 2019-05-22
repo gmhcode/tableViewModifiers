@@ -11,20 +11,22 @@ class OrderItem{
     
     
     //    var uuid : UUID?
-    var modifiers : [Modifier]?
+    var modifiers : [Modifier] = []
 
     var uuid : String
     let name : String
     var text : String = ""
     var isMainOrder = true
     var totalMods : [Modifier] = []
+    var price : Double
     
     var stackView: UIStackView?
     
-    init(name: String, uuid : String = UUID().uuidString, isMainOrder: Bool) {
+    init(name: String, uuid : String = UUID().uuidString, isMainOrder: Bool, price: Double) {
         self.name = name
         self.uuid = uuid
         self.isMainOrder = isMainOrder
+        self.price = price
     }
 }
 
@@ -43,6 +45,7 @@ extension OrderItem: Equatable {
             && lhs.modifiers == rhs.modifiers
             && lhs.uuid == rhs.uuid
             && lhs.text == rhs.text
+            && lhs.price == rhs.price
     }
 }
 extension OrderItem: Hashable
