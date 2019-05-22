@@ -112,7 +112,7 @@ class ViewController: UIViewController {
         potato2 = Modifier(name: "super", isModifierFor: ModifierController.shared.modDictionary[selectedOrder.name + potato4!.uuid]!, mainOrder: selectedOrder)
         ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: ModifierController.shared.modDictionary[selectedOrder.name + potato4!.uuid]!, mainOrder: selectedOrder)
         tableView.reloadData()
-        
+        //
         let index = orders.firstIndex(of: selectedOrder)!
         let indexPath = IndexPath(row: index, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
