@@ -34,7 +34,7 @@ class ViewController: UIViewController {
             return ModifierController.shared.modDictionary
         }
     }
-    
+     var seat = Seat(seatnumber: 0)
     var steak = OrderItem(name: "steak", isMainOrder: true, price: 10.00)
     var potato : Modifier?
     var cheese : Modifier?
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     
     @IBAction func mainOrderButtonTapped(_ sender: Any)
     {
-        
+        var seat = Seat(seatnumber: 0)
         let food = OrderItem(name: "food \(orders.count)", isMainOrder: true, price: 10.00)
         OrderItemController.shared.orders.append(food)
         
@@ -92,15 +92,15 @@ class ViewController: UIViewController {
         
         
         
-//        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food)
-//        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food)
-//        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food)
-//        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food)
-//        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food)
-//        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food)
+        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food, seat: seat)
+        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato4!, mainOrder: food, seat: seat)
         
         
-//        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato4!, mainOrder: food)
         
         let indexPath = IndexPath(row: orders.count - 1, section: 0)
 //        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
@@ -111,14 +111,14 @@ class ViewController: UIViewController {
     
     @IBAction func modForMain(_ sender: Any) {
         potato = Modifier(name: "potato", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: potato!.price, uuid:  potato!.uuid)
-        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!)
+        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: seat)
         
         //
         reloadAndScroll()
     }
     @IBAction func mod2ForMain(_ sender: Any) {
         steak2 = Modifier(name: "steak", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: steak2!.price, uuid:  steak2!.uuid)
-        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!)
+        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: seat)
         
         //
         reloadAndScroll()
@@ -135,7 +135,7 @@ class ViewController: UIViewController {
         
         potato2 = Modifier(name: "super", isModifierFor: dict[selectedOrder.name + potato!.uuid]!, mainOrder: selectedOrder, price: 3.00, uuid: potato2!.uuid)
         
-        ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: dict[selectedOrder.name + potato!.uuid]!, mainOrder: selectedOrder)
+        ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: dict[selectedOrder.name + potato!.uuid]!, mainOrder: selectedOrder, seat: seat)
         
         //
        reloadAndScroll()
@@ -150,7 +150,7 @@ class ViewController: UIViewController {
         
         
         potato3 = Modifier(name: "sauce", isModifierFor: potato2, mainOrder: selectedOrder, price: 2.00, uuid: potato3!.uuid )
-        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato2, mainOrder: selectedOrder)
+        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato2, mainOrder: selectedOrder, seat: seat)
         //
         reloadAndScroll()
     }
@@ -158,7 +158,7 @@ class ViewController: UIViewController {
     @IBAction func modifierForCheeseButtonTapped(_ sender: Any) {
         guard let selectedOrder = selectedOrder else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         potato4 = Modifier(name: "nacho cheese", isModifierFor: dict[selectedOrder.name + potato3!.uuid]!, mainOrder: selectedOrder, price: 2.00)
-        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder.name + potato3!.uuid]!, mainOrder: selectedOrder)
+        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder.name + potato3!.uuid]!, mainOrder: selectedOrder, seat: seat)
         
         //
         reloadAndScroll()
@@ -288,23 +288,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        
-        
-            
         default:
-            
-            
-             print("🌹\(orders[indexPath.row].uuid)")
+            print("🌹\(orders[indexPath.row].uuid)")
              print("🅰️\(orders[indexPath.row].name)")
              print("🌹\(orders[indexPath.row].totalMods.count)")
             tableView.deselectRow(at: indexPath, animated: false)
-//            if orders.contains(orders[indexPath.row]){
-//                let index = orders.firstIndex(of: orders[indexPath.row])!
-//
-//                tableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition(rawValue: 0)!)
-//            }
-            
-            
+
         }
         
         

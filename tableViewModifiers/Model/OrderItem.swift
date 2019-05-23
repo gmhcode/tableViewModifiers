@@ -27,6 +27,7 @@ class OrderItem{
         self.uuid = uuid
         self.isMainOrder = isMainOrder
         self.price = price
+        self.text = uuid
     }
 }
 

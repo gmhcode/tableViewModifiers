@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9066510922949433005258A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066510822949433005258A6 /* AppDelegate.swift */; };
-		9066510B22949433005258A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066510A22949433005258A6 /* ViewController.swift */; };
+		9066510B22949433005258A6 /* ModifiersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066510A22949433005258A6 /* ModifiersViewController.swift */; };
 		9066510E22949433005258A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9066510C22949433005258A6 /* Main.storyboard */; };
 		9066511022949434005258A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9066510F22949434005258A6 /* Assets.xcassets */; };
 		9066511322949434005258A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9066511122949434005258A6 /* LaunchScreen.storyboard */; };
@@ -18,12 +18,16 @@
 		90665123229495FF005258A6 /* OrderItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90665122229495FF005258A6 /* OrderItemController.swift */; };
 		9066512522949972005258A6 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066512422949972005258A6 /* OrderTableViewCell.swift */; };
 		906651272294997B005258A6 /* ModifierTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906651262294997A005258A6 /* ModifierTableViewCell.swift */; };
+		9066512A2295F8F9005258A6 /* SeatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906651292295F8F9005258A6 /* SeatsViewController.swift */; };
+		9066512C2295F999005258A6 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066512B2295F998005258A6 /* Seat.swift */; };
+		9066512E2295FA27005258A6 /* alertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066512D2295FA27005258A6 /* alertExtension.swift */; };
+		906651302296002E005258A6 /* SeatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066512F2296002E005258A6 /* SeatsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9066510522949433005258A6 /* tableViewModifiers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tableViewModifiers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9066510822949433005258A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9066510A22949433005258A6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9066510A22949433005258A6 /* ModifiersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiersViewController.swift; sourceTree = "<group>"; };
 		9066510D22949433005258A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9066510F22949434005258A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9066511222949434005258A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -34,6 +38,10 @@
 		90665122229495FF005258A6 /* OrderItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemController.swift; sourceTree = "<group>"; };
 		9066512422949972005258A6 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		906651262294997A005258A6 /* ModifierTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierTableViewCell.swift; sourceTree = "<group>"; };
+		906651292295F8F9005258A6 /* SeatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatsViewController.swift; sourceTree = "<group>"; };
+		9066512B2295F998005258A6 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
+		9066512D2295FA27005258A6 /* alertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertExtension.swift; sourceTree = "<group>"; };
+		9066512F2296002E005258A6 /* SeatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +75,12 @@
 			isa = PBXGroup;
 			children = (
 				9066510822949433005258A6 /* AppDelegate.swift */,
-				9066510A22949433005258A6 /* ViewController.swift */,
+				9066510A22949433005258A6 /* ModifiersViewController.swift */,
+				906651292295F8F9005258A6 /* SeatsViewController.swift */,
 				906651282294A71F005258A6 /* cells */,
 				9066511E2294952C005258A6 /* Model */,
 				9066510C22949433005258A6 /* Main.storyboard */,
+				9066512D2295FA27005258A6 /* alertExtension.swift */,
 				90665121229495F1005258A6 /* ModelController */,
 				9066510F22949434005258A6 /* Assets.xcassets */,
 				9066511122949434005258A6 /* LaunchScreen.storyboard */,
@@ -84,6 +94,7 @@
 			children = (
 				9066511A22949451005258A6 /* Modifier.swift */,
 				9066511C22949456005258A6 /* OrderItem.swift */,
+				9066512B2295F998005258A6 /* Seat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -93,6 +104,7 @@
 			children = (
 				9066511F2294953F005258A6 /* ModifierController.swift */,
 				90665122229495FF005258A6 /* OrderItemController.swift */,
+				9066512F2296002E005258A6 /* SeatsController.swift */,
 			);
 			path = ModelController;
 			sourceTree = "<group>";
@@ -178,13 +190,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				906651272294997B005258A6 /* ModifierTableViewCell.swift in Sources */,
-				9066510B22949433005258A6 /* ViewController.swift in Sources */,
+				9066510B22949433005258A6 /* ModifiersViewController.swift in Sources */,
 				9066511D22949456005258A6 /* OrderItem.swift in Sources */,
 				9066510922949433005258A6 /* AppDelegate.swift in Sources */,
 				9066512522949972005258A6 /* OrderTableViewCell.swift in Sources */,
 				906651202294953F005258A6 /* ModifierController.swift in Sources */,
 				9066511B22949451005258A6 /* Modifier.swift in Sources */,
+				9066512A2295F8F9005258A6 /* SeatsViewController.swift in Sources */,
+				906651302296002E005258A6 /* SeatsController.swift in Sources */,
+				9066512C2295F999005258A6 /* Seat.swift in Sources */,
 				90665123229495FF005258A6 /* OrderItemController.swift in Sources */,
+				9066512E2295FA27005258A6 /* alertExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

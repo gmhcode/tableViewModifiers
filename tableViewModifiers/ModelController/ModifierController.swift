@@ -51,6 +51,42 @@ class ModifierController {
     }
     
     
+    func seatForLoop(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
+        if !mainOrder.totalMods.isEmpty {
+            for i in seat.orders {
+                if i == isModifierFor {
+                    let index2 = seat.orders.firstIndex(of: isModifierFor as! Modifier)!
+                    if isModifierFor.modifiers.count > 0 {
+                        seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
+                    } else {
+                        seat.orders.insert(modifier as! Modifier, at: index2)
+                        seat.orders.remove(at: index2 + 1)
+                        seat.orders.insert(isModifierFor, at: index2)
+                        print("🔴\(i.name)")
+                    }
+                }
+            }
+        }
+    }
+    func seatForLoopModIsMain(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
+        if !mainOrder.totalMods.isEmpty {
+            for i in seat.orders {
+                if i == isModifierFor {
+                    
+                    let index2 = seat.orders.firstIndex(of: isModifierFor)!
+                    
+                    if isModifierFor.modifiers.count > 0 {
+                        seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
+                    } else {
+                        seat.orders.insert(modifier as! Modifier, at: index2)
+                        seat.orders.remove(at: index2 + 1)
+                        seat.orders.insert(isModifierFor, at: index2)
+                        print("🔴\(seat.seatNumber)")
+                    }
+                }
+            }
+        }
+    }
     
     
     
@@ -58,13 +94,12 @@ class ModifierController {
     
     
     
-    
-    
-    func addModifierToOrder(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem){
+    func addModifierToOrder(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat){
         
         
-
-            isModifierFor.modifiers.append(modifier as! Modifier)
+        
+        
+        isModifierFor.modifiers.append(modifier as! Modifier)
         
         
         if isModifierFor != mainOrder {
@@ -88,10 +123,12 @@ class ModifierController {
                 if !mainOrder.totalMods.isEmpty {
                     for i in OrderItemController.shared.orders {
                         if i == isModifierFor {
-                            let index2 = OrderItemController.shared.orders.firstIndex(of: isModifierFor as! Modifier)!
+                            let index2 = OrderItemController.shared.orders.firstIndex(of: isModifierFor)!
+                            
                             if isModifierFor.modifiers.count > 0 {
                                 OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
-                            } else {
+                            }
+                            else {
                                 OrderItemController.shared.orders.insert(modifier as! Modifier, at: index2)
                                 OrderItemController.shared.orders.remove(at: index2 + 1)
                                 OrderItemController.shared.orders.insert(isModifierFor, at: index2)
@@ -101,6 +138,24 @@ class ModifierController {
                     }
                 }
             }
+            
+            
+            
+            
+            
+            seatForLoop(modifier: modifier, isModifierFor: isModifierFor, mainOrder: mainOrder, seat: seat)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         } else {
             mainOrder.totalMods.append(modifier as! Modifier)
 
@@ -119,9 +174,11 @@ class ModifierController {
                     }
                 }
             }
+            
+            seatForLoopModIsMain(modifier: modifier, isModifierFor: isModifierFor, mainOrder: mainOrder, seat: seat)
+            
+            
+            
         }
     }
-    
-    
-    
 }

@@ -21,10 +21,9 @@ class Modifier: OrderItem {
         // vv doing this for equatable purposes only
         
         self.uuid = uuid
-        self.text = mainOrder.uuid + isModifierFor.uuid + self.uuid + "\(isModifierFor.modifiers.count)"
+        self.text = "\(mainOrder.name)    " + mainOrder.uuid + isModifierFor.uuid + self.uuid + "\(isModifierFor.modifiers.count)"
 
         ModifierController.shared.modDictionary[mainOrder.name + self.uuid ] = self
-//        mainOrder.totalMods.append(self)
         
         
         
@@ -32,14 +31,9 @@ class Modifier: OrderItem {
         
     }
     override var modifiers: [Modifier] {
-//        didSet{
-//            if modifiers.count > 0 {
-//                isModifierFor.modifiers.append(modifiers[modifiers.count - 1])
-//            }
-//            
-//        }
+        
         willSet {
-            
+//            doing this will allow us to remove mods from the isModifiedFor.modifiers when we remove mods from self
             for i in modifiers {
                 if isModifierFor.modifiers.contains(i) {
                     let index = isModifierFor.modifiers.firstIndex(of: i)!
@@ -48,6 +42,7 @@ class Modifier: OrderItem {
             }
         }
         didSet{
+//            in willSet we removed all mods that were the same, now we add all out modifiers to isModifierFor mods, we need this for when we remove mods. if we dont do this, the modifiers will not align with isModifierFor
             isModifierFor.modifiers += modifiers
         }
     }
