@@ -17,10 +17,10 @@ class Modifier: OrderItem {
     {
         self.isModifierFor = isModifierFor
         self.mainOrder = mainOrder
-        super.init(name: name, isMainOrder: false, price: price)
-        // vv doing this for equatable purposes only
-        
+        super.init(name: name, isMainOrder: false, price: price, seat: mainOrder.seat)
         self.uuid = uuid
+        
+        // vv doing this for equatable purposes only
         self.text = "\(mainOrder.name)    " + mainOrder.uuid + isModifierFor.uuid + self.uuid + "\(isModifierFor.modifiers.count)"
 
         ModifierController.shared.modDictionary[mainOrder.name + self.uuid ] = self
@@ -30,10 +30,14 @@ class Modifier: OrderItem {
         self.text.append("\n\(name) is modifier for \(String(describing: isModifierFor.name)) \n")
         
     }
+    
+    
+    
     override var modifiers: [Modifier] {
         
-        willSet {
-//            doing this will allow us to remove mods from the isModifiedFor.modifiers when we remove mods from self
+        willSet
+        {
+            //doing this will allow us to remove mods from the isModifiedFor.modifiers when we remove mods from self
             for i in modifiers {
                 if isModifierFor.modifiers.contains(i) {
                     let index = isModifierFor.modifiers.firstIndex(of: i)!
@@ -41,11 +45,23 @@ class Modifier: OrderItem {
                 }
             }
         }
-        didSet{
-//            in willSet we removed all mods that were the same, now we add all out modifiers to isModifierFor mods, we need this for when we remove mods. if we dont do this, the modifiers will not align with isModifierFor
+        didSet
+        {
+            //in willSet we removed all mods that were the same, now we add all out modifiers to isModifierFor mods, we need this for when we remove mods. if we dont do this, the modifiers will not align with isModifierFor
             isModifierFor.modifiers += modifiers
         }
     }
+    
+    
+    
+    override var seat: Seat? {
+        didSet {
+            
+        }
+    }
+    
+    
+    
 }
 
 

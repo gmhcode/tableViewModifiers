@@ -19,15 +19,25 @@ class OrderItem{
     var isMainOrder = true
     var totalMods : [Modifier] = []
     var price : Double
+    var seat : Seat? {
+        didSet {
+            if isMainOrder {
+                //whenever the main order seat changes, the seats for all the mods will change
+                totalMods.forEach({while $0.seat != self.seat{$0.seat = self.seat}})
+                modifiers.forEach({while $0.seat != self.seat{$0.seat = self.seat}})
+            } 
+        }
+    }
     
     var stackView: UIStackView?
     
-    init(name: String, uuid : String = UUID().uuidString, isMainOrder: Bool, price: Double) {
+    init(name: String, uuid : String = UUID().uuidString, isMainOrder: Bool, price: Double, seat: Seat?) {
         self.name = name
         self.uuid = uuid
         self.isMainOrder = isMainOrder
         self.price = price
         self.text = uuid
+        self.seat = seat
     }
 }
 

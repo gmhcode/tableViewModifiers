@@ -13,12 +13,12 @@ class ModifierController {
     static var shared = ModifierController()
     var totalMods : [Modifier] = []
     var modDictionary: [String : OrderItem] = [:]
-    
+    var ordersToMove : [OrderItem] = []
     
     
     
     func removeMod(uuid: String, fromModifier: Modifier){
-        var orderToRemove = OrderItem(name: "hold", isMainOrder: true, price: 0.00)
+        var orderToRemove = OrderItem(name: "hold", isMainOrder: true, price: 0.00, seat: nil)
         var modToRemove = Modifier(name: "a", isModifierFor: orderToRemove, mainOrder: orderToRemove, price: 0.00)
         
         
