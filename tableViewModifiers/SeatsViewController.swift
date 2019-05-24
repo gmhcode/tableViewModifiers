@@ -37,7 +37,7 @@ class SeatsViewController: UIViewController {
     }
     
     
-    var dict : [String : OrderItem] {
+    var dict : [String : Modifier] {
         get{
             return ModifierController.shared.modDictionary
         }
@@ -45,7 +45,17 @@ class SeatsViewController: UIViewController {
     
     
     
-    var selectedSeat : Seat? 
+    var selectedSeat : Seat? {
+        willSet{
+            if newValue == nil {
+                print("wtf")
+                return
+            }
+        }
+        didSet {
+            print("uhhh")
+        }
+    }
     var selectedCell = UITableViewCell()
     var selectedOrder : OrderItem?
     /*
@@ -132,7 +142,7 @@ class SeatsViewController: UIViewController {
         let newSeat = Seat(seatnumber: seats.count + 1)
         
         SeatsController.shared.seats.append(newSeat)
-        selectedSeat = newSeat
+//        selectedSeat = newSeat
 
         tableView.reloadData()
 
@@ -143,29 +153,33 @@ class SeatsViewController: UIViewController {
     
     
     @IBAction func newOrderButtonTapped(_ sender: Any) {
-        guard let selectedSeat = selectedSeat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        var selectedSeat = seats[seats.count - 1]
+        if self.selectedSeat != nil {
+            selectedSeat = self.selectedSeat!
+        }
+        
         
         
         let food = OrderItem(name: "food \(orders.count)", isMainOrder: true, price: 10.00, seat: selectedSeat)
         OrderItemController.shared.orders.append(food)
         selectedSeat.orders.append(food)
         
-        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, price: steak2!.price, uuid:  steak2!.uuid)
-        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, price: potato!.price, uuid:  potato!.uuid)
-        cheese = Modifier(name: "cheese", isModifierFor: potato!, mainOrder: food, price: cheese!.price, uuid: cheese!.uuid)
-        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, price: baked!.price, uuid:  baked!.uuid)
-        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, price: burned!.price, uuid:  burned!.uuid)
-        potato4 = Modifier(name: "fries", isModifierFor: burned!, mainOrder: food, price: potato4!.price, uuid:  potato4!.uuid)
-        potato3 = Modifier(name: "sauce", isModifierFor: steak2!, mainOrder: food, price: potato3!.price, uuid: potato3!.uuid)
+//        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, price: steak2!.price, uuid:  steak2!.uuid)
+//        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, price: potato!.price, uuid:  potato!.uuid)
+//        cheese = Modifier(name: "cheese", isModifierFor: potato!, mainOrder: food, price: cheese!.price, uuid: cheese!.uuid)
+//        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, price: baked!.price, uuid:  baked!.uuid)
+//        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, price: burned!.price, uuid:  burned!.uuid)
+//        potato4 = Modifier(name: "fries", isModifierFor: burned!, mainOrder: food, price: potato4!.price, uuid:  potato4!.uuid)
+//        potato3 = Modifier(name: "sauce", isModifierFor: steak2!, mainOrder: food, price: potato3!.price, uuid: potato3!.uuid)
         
         
-        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food, seat: selectedSeat)
-        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: steak2!, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food, seat: selectedSeat)
+//        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: steak2!, mainOrder: food, seat: selectedSeat)
         
         
         
@@ -173,41 +187,184 @@ class SeatsViewController: UIViewController {
         let section = seats.firstIndex(of: selectedSeat)!
         let indexPath = IndexPath(row: selectedSeat.orders.count - 1, section: section)
         
+//        selectedOrder == nil ? (selectedOrder = food) : (selectedOrder = selectedOrder)
+        selectedOrder = food
         tableView.reloadData()
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        #warning("selectedSeat is randomley being set to nil here")
     }
     
     @IBAction func mod1ButtonTapped(_ sender: Any) {
+        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        guard selectedSeat != nil && potato != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
-        cheese = Modifier(name: "cheese", isModifierFor: dict[selectedOrder!.name + potato!.uuid]!, mainOrder: selectedOrder!, price: 0.39, uuid: cheese!.uuid)
+        potato = Modifier(name: "potato", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: 0.39, uuid: potato!.uuid)
         
-        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: dict[selectedOrder!.name + potato!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
-        ModifierController.shared.ordersToMove.append(selectedOrder!)
-        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
         
-        tableView.reloadData()
-    }
-    
-    
-    @IBAction func mod2ButtonTapped(_ sender: Any) {
         
-        baked = Modifier(name: "baked", isModifierFor: dict[selectedOrder!.name + potato!.uuid]!, mainOrder: selectedOrder!, price: 0.39, uuid: baked!.uuid)
-        
-        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: dict[selectedOrder!.name + potato!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
         ModifierController.shared.ordersToMove.append(selectedOrder!)
         ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
-        
+        print("🧠Blah 1")
         reloadAndScroll()
     }
     
-    @IBAction func mod3ButtonTapped(_ sender: Any)
-    {
+   
+    
+    
+    @IBAction func button3Tapped(_ sender: Any) {
+        guard  selectedOrder != nil && dict[selectedOrder!.uuid + potato!.uuid] != nil && selectedSeat != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        cheese = Modifier(name: "cheese", isModifierFor: dict[selectedOrder!.uuid + potato!.uuid]!, mainOrder: selectedOrder!, price: 0.39, uuid: cheese!.uuid)
+        
+        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: dict[selectedOrder!.uuid + potato!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        
+        ModifierController.shared.ordersToMove = []
+        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        
+        print("🧠Blah 2")
+        reloadAndScroll()
+        
+    }
+    
+    
+    
+    @IBAction func mod2ButtonTapped(_ sender: Any) {
+        guard  dict[selectedOrder!.uuid + cheese!.uuid] != nil && selectedOrder != nil && selectedSeat != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        baked = Modifier(name: "baked", isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, price: 0.39, uuid: baked!.uuid)
+        
+        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        
+        ModifierController.shared.ordersToMove = []
+        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        print("🧠Blah 3")
+        reloadAndScroll()
+    }
+    
+    
+    
+    
+    @IBAction func button4tapped(_ sender: Any) {
+        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        potato3 = Modifier(name: "sauce", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: potato3!.price, uuid: potato3!.uuid)
         
         
+        
+        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        
+        ModifierController.shared.ordersToMove = []
+        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        print("🧠Blah 1")
+        reloadAndScroll()
+    }
+    
+    
+    
+    
+    @IBAction func button5Tapped(_ sender: Any) {
+        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        
+        potato4 = Modifier(name: "fries", isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, price: potato4!.price, uuid:  potato4!.uuid)
+//        potato3 = Modifier(name: "sauce", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: potato3!.price, uuid: potato3!.uuid)
+        
+        
+        
+        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        
+        ModifierController.shared.ordersToMove = []
+        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        print("🧠Blah 1")
+        reloadAndScroll()
+        
+        
+        
+    }
+    
+    
+    @IBAction func button6Tapped(_ sender: Any) {
+        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        
+//        potato4 = Modifier(name: "fries", isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, price: potato4!.price, uuid:  potato4!.uuid)
+
+        burned = Modifier(name: "burned", isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, price: burned!.price, uuid:  burned!.uuid)
+        
+        
+        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
+        
+        ModifierController.shared.ordersToMove = []
+        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        print("🧠Blah 1")
+        reloadAndScroll()
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    @IBAction func removeOrder(_ sender: Any) {
+        
+        ModifierController.shared.removeOrderFromSeat(order: selectedOrder!)
+        ModifierController.shared.ordersToMove = []
+        let section = seats.firstIndex(of: selectedSeat!)!
+        
+        var indexPath = IndexPath()
+        if selectedSeat!.orders.count > 0 {
+            indexPath = IndexPath(row: selectedSeat!.orders.count, section: section)
+        } else {
+            indexPath = IndexPath(row: NSNotFound, section: section)
+        }
+        
+        
+        //        selectedOrder == nil ? (selectedOrder = food) : (selectedOrder = selectedOrder)
+        tableView.reloadData()
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        selectedOrder = nil
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @IBAction func removeMod(_ sender: Any) {
+        guard selectedOrder != nil && selectedOrder!.totalMods.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
+        ModifierController.shared.removeModFromOrder(modifierUUID: potato!.uuid, fromModifier: selectedOrder! )
+//        ModifierController.shared.removeMod(uuid: cheese!.uuid, fromModifier: dict[selectedOrder!.uuid + potato!.uuid]! as! Modifier)
+        print("🧠Blah delete")
+        reloadAndScroll()
     }
     
     
@@ -224,10 +381,11 @@ class SeatsViewController: UIViewController {
         
         tableView.reloadData()
         
-        let index = orders.firstIndex(of: (selectedOrder))!
-        let section = seats.firstIndex(of: selectedOrder.seat!)!
         
-        let indexPath = IndexPath(row: index + ((selectedOrder.totalMods.count) - 1), section: section)
+        let section = seats.firstIndex(of: selectedOrder.seat!)!
+        let index = seats[section].orders.firstIndex(of: (selectedOrder))!
+        
+        let indexPath = IndexPath(row: index + (selectedOrder.totalMods.count), section: section)
         tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
     }
     
@@ -244,37 +402,19 @@ extension SeatsViewController {
     func createNewSeat(){
 //        seats.append(Seat(seatnumber: seats.count + 1))
         let newSeat = Seat(seatnumber: seats.count + 1)
-        
+        print("🤚\(newSeat.seatNumber)")
         SeatsController.shared.seats.append(newSeat)
         selectedSeat = newSeat
+        
     }
     
     
     
     @objc func assignOrderTo(_ seat:UIButton){
         selectedSeat = seats[seat.tag]
+        print("seat number \(seat.tag) tapped")
         guard ModifierController.shared.ordersToMove != [] else {return}
-        /*
-         //        guard let allRows = tableView.indexPathsForSelectedRows else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-         //        for i in allRows {
-         //
-         //            print("Row: \(i.row)")
-         //            print("Row Count: \(allRows.count)")
-         //            print("section orders: \(seats[i.section].orders)")
-         //            guard let item = seats[i.section].orders?[i.row], seats.count - 1 >= seat.tag else {continue}
-         //
-         //
-         //
-         //
-         //
-         //            if seats[seat.tag].orders == nil {
-         //                seats[seat.tag].orders = [item]
-         //            }else{
-         //                seats[seat.tag].orders?.append(item)
-         //            }
-         //        }
-         if the first item that is to be deleted comes after the previously selected item in the seats.orders array it belongs to, MAKE IT the last item in the array to be        deleted
-         */
+        
         
         //loop through seats and look for items in the selected rows array
         
@@ -327,7 +467,9 @@ extension SeatsViewController {
         
         ModifierController.shared.ordersToMove = []
         tableView.reloadData()
+        
     }
+    
 }
 
 
@@ -358,7 +500,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard seats[section].orders.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return 0
+        guard seats[section].orders.count > 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return 0
         }
         let orders = seats[section].orders
         return orders.count
@@ -411,23 +553,28 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         
-//        cell.textLabel?.text = seats[indexPath.section].orders[indexPath.row].name
-//
-//        cell.detailTextLabel?.text = "\(String(describing: seats[indexPath.section].orders[indexPath.row].price))"
+
         
         
         return cell
     }
     
+    
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
+        print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
+        
+        
         
         let deSelectedOrder = seats[indexPath.section].orders[indexPath.row]
         
+        
+        
+        
         let orderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
         
-        var indexCounter = 1
         
         ModifierController.shared.ordersToMove.remove(at: orderIndex)
 //        vv this removes the deselected orders from orderToMove
@@ -438,22 +585,13 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
             let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
             
             let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
+            
             tableView.deselectRow(at: modIndexPath, animated: true)
             
             
-            let ordersToMoveModIndex = ModifierController.shared.ordersToMove.firstIndex(of: mod)!
-            ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod})
+            ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
 
-            indexCounter += 1
         }
-        
-        
-        
-        
-        
-        
-        
-        
         
     }
     
@@ -473,7 +611,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
 //            deSelectAllButSelectedCells(indexPath: indexPath)
 //        }
         guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-        
+        print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
         let currentOrder = seats[indexPath.section].orders[indexPath.row]
         selectedOrder = seats[indexPath.section].orders[indexPath.row]
         
@@ -507,12 +645,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
             let totalMods = seats[indexPath.section].orders[indexPath.row].totalMods
             
             
-//            if seats[indexPath.section].orders[indexPath.row] == seats[indexPath.section].orders[indexPath.row] as? Modifier
-//            {
-//                let mod = seats[indexPath.section].orders[indexPath.row] as! Modifier
-//                print("🅿️\(mod)")
-//            }
-//            print("🌹\(totalMods.count)")
+
             if totalMods.count > 0 {
                 
                 for i in totalMods {
@@ -522,7 +655,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
                         
                         let index = seats[indexPath.section].orders.firstIndex(of: i)!
                         
-                        print("🧶 \(i.name)         \(i.seat?.seatNumber)")
+//                        print("🧶 \(i.name)         \(i.seat?.seatNumber)")
 //                        print("🌹\(orderIndex)")
 //                        print("🅰️\(index)")
                         

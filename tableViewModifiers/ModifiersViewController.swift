@@ -114,14 +114,14 @@ class ViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: seat)
         
         //
-        reloadAndScroll()
+        reloadAndScroll2()
     }
     @IBAction func mod2ForMain(_ sender: Any) {
         steak2 = Modifier(name: "steak", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: steak2!.price, uuid:  steak2!.uuid)
         ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: seat)
         
         //
-        reloadAndScroll()
+        reloadAndScroll2()
     }
     
     
@@ -138,7 +138,7 @@ class ViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: potato2!, isModifierFor: dict[selectedOrder.name + potato!.uuid]!, mainOrder: selectedOrder, seat: seat)
         
         //
-       reloadAndScroll()
+       reloadAndScroll2()
         
         
         
@@ -152,7 +152,7 @@ class ViewController: UIViewController {
         potato3 = Modifier(name: "sauce", isModifierFor: potato2, mainOrder: selectedOrder, price: 2.00, uuid: potato3!.uuid )
         ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: potato2, mainOrder: selectedOrder, seat: seat)
         //
-        reloadAndScroll()
+        reloadAndScroll2()
     }
     
     @IBAction func modifierForCheeseButtonTapped(_ sender: Any) {
@@ -161,18 +161,18 @@ class ViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder.name + potato3!.uuid]!, mainOrder: selectedOrder, seat: seat)
         
         //
-        reloadAndScroll()
+        reloadAndScroll2()
     }
     
     
     
     
     
-    func reloadAndScroll(){
-        guard let selectedOrder = selectedOrder else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
+    func reloadAndScroll2(){
+        guard selectedOrder != nil && selectedOrder!.totalMods.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
         tableView.reloadData()
-        let index = orders.firstIndex(of: (selectedOrder))!
-        let indexPath = IndexPath(row: index + ((selectedOrder.totalMods.count) - 1), section: 0)
+        let index = orders.firstIndex(of: (selectedOrder!))!
+        let indexPath = IndexPath(row: index + ((selectedOrder!.totalMods.count) - 1), section: 0)
         tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
     }
     
@@ -180,8 +180,9 @@ class ViewController: UIViewController {
     
     
     @IBAction func removeModForMain(_ sender: Any) {
-        ModifierController.shared.removeMod(uuid: potato3!.uuid, fromModifier: dict[selectedOrder!.name + potato2!.uuid]! as! Modifier)
-        reloadAndScroll()
+        ModifierController.shared.removeModFromOrder(modifierUUID: potato3!.uuid, fromModifier: dict[selectedOrder!.name + potato2!.uuid]!)
+//        ModifierController.shared.removeMod(uuid: potato3!.uuid, fromModifier: dict[selectedOrder!.name + potato2!.uuid]! as! Modifier)
+        reloadAndScroll2()
     }
     
     

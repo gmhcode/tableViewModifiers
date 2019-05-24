@@ -11,52 +11,165 @@ import UIKit
 class ModifierController {
     
     static var shared = ModifierController()
-    var totalMods : [Modifier] = []
-    var modDictionary: [String : OrderItem] = [:]
+    var modDictionary: [String : Modifier] = [:]
     var ordersToMove : [OrderItem] = []
     
     
     
-    func removeMod(uuid: String, fromModifier: Modifier){
-        var orderToRemove = OrderItem(name: "hold", isMainOrder: true, price: 0.00, seat: nil)
-        var modToRemove = Modifier(name: "a", isModifierFor: orderToRemove, mainOrder: orderToRemove, price: 0.00)
+    
+    
+    func removeModFromOrder(modifierUUID: String, fromModifier: OrderItem){
         
-        
-        
-        if fromModifier.isMainOrder == false && fromModifier.modifiers.count > 0 {
-            
-            
-            
-            for i in fromModifier.modifiers {
-                
-                if i.uuid == uuid {
-                    modToRemove = i
-                    let index = fromModifier.modifiers.firstIndex(of: modToRemove)!
-                    fromModifier.modifiers.remove(at: index)
-                    
-                    if fromModifier.mainOrder.totalMods.contains(modToRemove){
-                        let totalIndex = fromModifier.mainOrder.totalMods.firstIndex(of: modToRemove)!
-                        fromModifier.mainOrder.totalMods.remove(at: totalIndex)
-                    }
-                    
-                    if OrderItemController.shared.orders.contains(modToRemove){
-                        let ordersIndex = OrderItemController.shared.orders.firstIndex(of: modToRemove)!
-                        OrderItemController.shared.orders.remove(at: ordersIndex)
-                    }
-                    break
-                    
+//        let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier)
+        guard let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier) else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        removeModFromOrderMods(modifier: modifier, fromModifier: fromModifier)
+        removeModFromTotalMods(modifier: modifier, fromModifier: fromModifier)
+        removeModFromSeat(modifier: modifier, fromModifier: fromModifier)
+        if modifier.modifiers.count > 0 {
+            for i in modifier.modifiers {
+                removeModFromOrderMods(modifier: i, fromModifier: fromModifier)
+                removeModFromTotalMods(modifier: i, fromModifier: fromModifier)
+                removeModFromSeat(modifier: i, fromModifier: fromModifier)
+            }
+        } else {
+//            removeModFromOrderMods(modifier: modifier!, fromModifier: fromModifier)
+//            removeModFromTotalMods(modifier: modifier!, fromModifier: fromModifier)
+//            removeModFromSeat(modifier: modifier!, fromModifier: fromModifier)
+        }
+    }
+    
+    func removeOrderFromSeat(order: OrderItem){
+        guard let seat = order.seat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        for seatOrder in seat.orders {
+            if seatOrder == order {
+                for modifier in seatOrder.modifiers {
+                    seat.orders.removeAll(where: {$0 == modifier})
                 }
+            }
+            seat.orders.removeAll(where: {$0 == order})
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    fileprivate func findModifierWith(uuid: String, fromModifier: OrderItem)-> Modifier? {
+        
+        for i in fromModifier.modifiers {
+            
+            if i.uuid == uuid {
+                
+               
+                return i
+                
+                
+            }
+        }
+        return nil
+    }
+
+    fileprivate func removeModFromOrderMods(modifier: Modifier, fromModifier: OrderItem){
+        
+        if fromModifier.modifiers.isEmpty == false {
+            
+            for i in fromModifier.modifiers{
+                removeModFromOrderMods(modifier: modifier, fromModifier: i)
+                
+            }
+            if (fromModifier.modifiers.contains(modifier))
+            {
+                fromModifier.modifiers.removeAll(where: {$0 == modifier || $0 == modifier.isModifierFor})
             }
         }
     }
     
     
-    func seatForLoop(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
+    fileprivate func removeModFromTotalMods(modifier: Modifier, fromModifier: OrderItem){
+        
+        if fromModifier == fromModifier as? Modifier {
+            let mod = fromModifier as! Modifier
+            for i in mod.mainOrder.totalMods{
+                
+                if i == modifier {
+                    mod.mainOrder.totalMods.removeAll(where: {$0 == i || $0 == i.isModifierFor})
+                }
+            }
+        }
+        else{
+            for i in fromModifier.totalMods{
+                
+                if i == modifier {
+                    fromModifier.totalMods.removeAll(where: {$0 == i})
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+   fileprivate func removeModFromSeat(modifier: Modifier, fromModifier: OrderItem){
+        
+        if fromModifier == fromModifier as? Modifier {
+            let mod = fromModifier as! Modifier
+            
+            for i in mod.mainOrder.seat!.orders {
+                
+                if i == modifier && i == i as? Modifier {
+                    
+                    mod.mainOrder.seat!.orders.removeAll(where: {$0 == i || $0 == (i as! Modifier).isModifierFor})
+                }
+            }
+        }
+        else {
+           
+            
+            for i in fromModifier.seat!.orders {
+                fromModifier.seat!.orders.removeAll(where: {$0 == modifier})
+                }
+            }
+    }
+    
+    
+    
+    
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    fileprivate func seatForLoop(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
         if !mainOrder.totalMods.isEmpty {
             for i in seat.orders {
                 if i == isModifierFor {
                     let index2 = seat.orders.firstIndex(of: isModifierFor as! Modifier)!
-                    if isModifierFor.modifiers.count > 0 {
+                    if isModifierFor.modifiers.count == 0 {
                         seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
                     } else {
                         seat.orders.insert(modifier as! Modifier, at: index2)
@@ -68,16 +181,19 @@ class ModifierController {
             }
         }
     }
-    func seatForLoopModIsMain(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
+    fileprivate func seatForLoopModIsMain(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
         if !mainOrder.totalMods.isEmpty {
             for i in seat.orders {
                 if i == isModifierFor {
                     
                     let index2 = seat.orders.firstIndex(of: isModifierFor)!
                     
-                    if isModifierFor.modifiers.count > 0 {
-                        seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
-                    } else {
+                    if isModifierFor.modifiers.count > 0
+                    {
+                        seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count)
+                    }
+                    else
+                    {
                         seat.orders.insert(modifier as! Modifier, at: index2)
                         seat.orders.remove(at: index2 + 1)
                         seat.orders.insert(isModifierFor, at: index2)
@@ -112,9 +228,9 @@ class ModifierController {
 //                        mainOrder.totalMods.remove(at: index + 1)
 //                        mainOrder.totalMods.insert(isModifierFor as! Modifier, at: index)
                         mainOrder.totalMods.append(modifier as! Modifier)
+                        break
                         
-                        
-                        print("🔵\(i.name)")
+//                        print("🔵\(i.name)")
 //                        print("🔵\(index2)      \(index)")
                         
                     }

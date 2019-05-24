@@ -21,9 +21,9 @@ class Modifier: OrderItem {
         self.uuid = uuid
         
         // vv doing this for equatable purposes only
-        self.text = "\(mainOrder.name)    " + mainOrder.uuid + isModifierFor.uuid + self.uuid + "\(isModifierFor.modifiers.count)"
+        self.text = "\(mainOrder.name)    " + mainOrder.uuid + isModifierFor.uuid + self.uuid + "\(isModifierFor.modifiers.count) + mainCount \(mainOrder.totalMods.count)"
 
-        ModifierController.shared.modDictionary[mainOrder.name + self.uuid ] = self
+        ModifierController.shared.modDictionary[mainOrder.uuid + self.uuid] = self
         
         
         
@@ -43,12 +43,16 @@ class Modifier: OrderItem {
                     let index = isModifierFor.modifiers.firstIndex(of: i)!
                     isModifierFor.modifiers.remove(at: index)
                 }
+
             }
+            
+            
         }
         didSet
         {
             //in willSet we removed all mods that were the same, now we add all out modifiers to isModifierFor mods, we need this for when we remove mods. if we dont do this, the modifiers will not align with isModifierFor
             isModifierFor.modifiers += modifiers
+//            mainOrder.totalMods += modifiers
         }
     }
     
