@@ -650,6 +650,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
+        //asd
 //        vv this removes the deselected orders from orderToMove
         for mod in deSelectedOrder.totalMods {
 //        if ModifierController.shared.ordersToMove.contains(i) {
@@ -680,7 +681,9 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    
+    func stuff(){
+        
+    }
     
 //    func selectRow(){
 //        guard let selectedOrder = selectedOrder, let selectedOrderSeat = selectedOrder.seat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
