@@ -22,9 +22,11 @@ class ModifierController {
         
 //        let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier)
         guard let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier) else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
         removeModFromOrderMods(modifier: modifier, fromModifier: fromModifier)
         removeModFromTotalMods(modifier: modifier, fromModifier: fromModifier)
         removeModFromSeat(modifier: modifier, fromModifier: fromModifier)
+        
         if modifier.modifiers.count > 0 {
             for i in modifier.modifiers {
                 removeModFromOrderMods(modifier: i, fromModifier: fromModifier)
@@ -51,11 +53,13 @@ class ModifierController {
         
     }
     
-    
-    
-    
-    
-    
+    func removeSeat(seat: Seat){
+        
+        SeatsController.shared.seats.removeAll(where: {$0 == seat})
+        
+        
+        
+    }
     
     
     fileprivate func findModifierWith(uuid: String, fromModifier: OrderItem)-> Modifier? {

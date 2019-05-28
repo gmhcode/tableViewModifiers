@@ -10,6 +10,10 @@ import UIKit
 
 class OrderTableViewCell: UITableViewCell {
 
+    
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +24,6 @@ class OrderTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    var orderItem: OrderItem?
 
 }

@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="74" width="753" height="1272"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="orderCell" textLabel="eAa-C6-ORU" detailTextLabel="vv1-3I-bBE" style="IBUITableViewCellStyleValue1" id="rsH-xe-6dZ" customClass="OrderTableViewCell" customModule="tableViewModifiers" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="orderCell" textLabel="eAa-C6-ORU" detailTextLabel="vv1-3I-bBE" style="IBUITableViewCellStyleValue1" id="rsH-xe-6dZ" customClass="OrderTableViewCell" customModule="tableViewModifiers" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="753" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rsH-xe-6dZ" id="iYJ-1l-FSL">
@@ -215,7 +215,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="modifierCell" textLabel="ikj-IF-CHA" detailTextLabel="jpJ-4n-dEL" style="IBUITableViewCellStyleValue1" id="hIj-Aa-v6K" customClass="ModifierTableViewCell" customModule="tableViewModifiers" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="modifierCell" textLabel="ikj-IF-CHA" detailTextLabel="jpJ-4n-dEL" style="IBUITableViewCellStyleValue1" id="hIj-Aa-v6K" customClass="ModifierTableViewCell" customModule="tableViewModifiers" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="80" width="753" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hIj-Aa-v6K" id="glI-Rc-txw">
@@ -273,6 +273,16 @@
                                 </state>
                                 <connections>
                                     <action selector="mod1ButtonTapped:" destination="lca-ul-cls" eventType="touchUpInside" id="5Ce-5j-sRm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aF1-EU-4sT">
+                                <rect key="frame" x="802" y="910" width="72" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Mod2ForMain"/>
+                                <connections>
+                                    <action selector="mod2ButtonTapped:" destination="lca-ul-cls" eventType="touchUpInside" id="fAN-YT-weo"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y4Y-Ll-YQc">
@@ -348,14 +358,16 @@
                                     <action selector="removeOrder:" destination="lca-ul-cls" eventType="touchUpInside" id="dJa-tn-eB1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aF1-EU-4sT">
-                                <rect key="frame" x="802" y="910" width="72" height="68"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x2v-OR-Mqy">
+                                <rect key="frame" x="893" y="910" width="121" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Mod2ForMain"/>
+                                <color key="backgroundColor" red="1" green="0.024170271520000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="remove seat">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="mod2ButtonTapped:" destination="lca-ul-cls" eventType="touchUpInside" id="fAN-YT-weo"/>
+                                    <action selector="removeSeat:" destination="lca-ul-cls" eventType="touchUpInside" id="Ltv-4n-4rQ"/>
                                 </connections>
                             </button>
                         </subviews>
