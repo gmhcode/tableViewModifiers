@@ -190,11 +190,8 @@ class SeatsViewController: UIViewController {
         potato = Modifier(name: "potato", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: 0.39, uuid: potato!.uuid)
         
         
-        
-        
         ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
         
         print("🧠Blah 1")
         reloadAndScroll()
@@ -210,9 +207,7 @@ class SeatsViewController: UIViewController {
         
         ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: dict[selectedOrder!.uuid + potato!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
-        //        ModifierController.shared.ordersToMove.append(selectedOrder!)
-        //        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+
         
         print("🧠Blah 2")
         reloadAndScroll()
@@ -228,8 +223,6 @@ class SeatsViewController: UIViewController {
         
         ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-//        we need to set ordersToMove to nothing here or when something is moving it will leave some mods behind
-        ModifierController.shared.ordersToMove = []
      
         print("🧠Blah 3")
         reloadAndScroll()
@@ -248,7 +241,6 @@ class SeatsViewController: UIViewController {
         
         ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
         
         print("🧠Blah 1")
         reloadAndScroll()
@@ -264,11 +256,8 @@ class SeatsViewController: UIViewController {
         
         potato4 = Modifier(name: "fries", isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, price: potato4!.price, uuid:  potato4!.uuid)
         
-        
-        
         ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
         
         print("🧠Blah 1")
         reloadAndScroll()
@@ -289,7 +278,7 @@ class SeatsViewController: UIViewController {
         
         ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
-        ModifierController.shared.ordersToMove = []
+        
         
         print("🧠Blah 1")
         reloadAndScroll()

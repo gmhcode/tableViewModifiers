@@ -286,5 +286,8 @@ class ModifierController {
             
             
         }
+        //we need to set ordersToMove to nothing here or when something is moving it will leave some mods behind
+
+        ordersToMove = []
     }
 }
