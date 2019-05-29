@@ -20,23 +20,21 @@ class ModifierController {
     
     func removeModFromOrder(modifierUUID: String, fromModifier: OrderItem){
         
-//        let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier)
         guard let modifier = findModifierWith(uuid: modifierUUID, fromModifier: fromModifier) else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
+        //remove modifier first or it will not be removed in some instances
         removeModFromOrderMods(modifier: modifier, fromModifier: fromModifier)
         removeModFromTotalMods(modifier: modifier, fromModifier: fromModifier)
         removeModFromSeat(modifier: modifier, fromModifier: fromModifier)
         
         if modifier.modifiers.count > 0 {
             for i in modifier.modifiers {
+                // remove need to remove from order mods and total mods because they cant share info
                 removeModFromOrderMods(modifier: i, fromModifier: fromModifier)
                 removeModFromTotalMods(modifier: i, fromModifier: fromModifier)
+                //if we dont remove from seat then they will remain
                 removeModFromSeat(modifier: i, fromModifier: fromModifier)
             }
-        } else {
-//            removeModFromOrderMods(modifier: modifier!, fromModifier: fromModifier)
-//            removeModFromTotalMods(modifier: modifier!, fromModifier: fromModifier)
-//            removeModFromSeat(modifier: modifier!, fromModifier: fromModifier)
         }
     }
     
@@ -136,7 +134,7 @@ class ModifierController {
         else {
            
             
-            for i in fromModifier.seat!.orders {
+            for _ in fromModifier.seat!.orders {
                 fromModifier.seat!.orders.removeAll(where: {$0 == modifier})
                 }
             }
@@ -173,9 +171,10 @@ class ModifierController {
             for i in seat.orders {
                 if i == isModifierFor {
                     let index2 = seat.orders.firstIndex(of: isModifierFor as! Modifier)!
-                    if isModifierFor.modifiers.count == 0 {
+                    if isModifierFor.modifiers.count > 1 {
                         seat.orders.insert(modifier as! Modifier, at: index2 + isModifierFor.modifiers.count )
                     } else {
+                        /*this inserts the modifier on top on the isModifierFor, then removes the isModifierFor and inserts it on top of the modifier. if we dont do this, all the modifiers will appear on top of the ismodifiers */
                         seat.orders.insert(modifier as! Modifier, at: index2)
                         seat.orders.remove(at: index2 + 1)
                         seat.orders.insert(isModifierFor, at: index2)
@@ -185,6 +184,7 @@ class ModifierController {
             }
         }
     }
+    
     fileprivate func seatForLoopModIsMain(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat) {
         if !mainOrder.totalMods.isEmpty {
             for i in seat.orders {
@@ -198,6 +198,7 @@ class ModifierController {
                     }
                     else
                     {
+                        //might not need this
                         seat.orders.insert(modifier as! Modifier, at: index2)
                         seat.orders.remove(at: index2 + 1)
                         seat.orders.insert(isModifierFor, at: index2)
@@ -213,7 +214,7 @@ class ModifierController {
     
     
     
-    
+
     func addModifierToOrder(modifier: OrderItem, isModifierFor: OrderItem, mainOrder: OrderItem, seat: Seat){
         
         
@@ -227,16 +228,11 @@ class ModifierController {
                 for i in mainOrder.totalMods {
                     
                     if i == isModifierFor {
-                        let index = mainOrder.totalMods.firstIndex(of: isModifierFor as! Modifier)!
-//                        mainOrder.totalMods.insert(modifier as! Modifier, at: index)
-//                        mainOrder.totalMods.remove(at: index + 1)
-//                        mainOrder.totalMods.insert(isModifierFor as! Modifier, at: index)
+//                        let index = mainOrder.totalMods.firstIndex(of: isModifierFor as! Modifier)!
+
                         mainOrder.totalMods.append(modifier as! Modifier)
+                        //need to break here or we will get duplicates
                         break
-                        
-//                        print("🔵\(i.name)")
-//                        print("🔵\(index2)      \(index)")
-                        
                     }
                 }
                 
@@ -264,16 +260,6 @@ class ModifierController {
             
             
             seatForLoop(modifier: modifier, isModifierFor: isModifierFor, mainOrder: mainOrder, seat: seat)
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             
         } else {

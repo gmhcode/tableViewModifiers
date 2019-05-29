@@ -25,8 +25,6 @@ class ViewController: UIViewController {
     var orders : [OrderItem] {
         get{
             return OrderItemController.shared.orders
-        } set {
-            OrderItemController.shared.orders.append(contentsOf: newValue)
         }
     }
     var dict : [String : OrderItem] {

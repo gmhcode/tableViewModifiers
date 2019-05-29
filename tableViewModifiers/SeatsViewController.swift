@@ -9,7 +9,7 @@
 import UIKit
 
 class SeatsViewController: UIViewController {
-
+    
     
     var steak = OrderItem(name: "steak", isMainOrder: true, price: 10.00, seat: nil)
     var potato : Modifier?
@@ -48,39 +48,10 @@ class SeatsViewController: UIViewController {
     
     var selectedSeat : Seat? {
         willSet {
-//            if selectedSeat != nil && selectedSeat != newValue {
-//
-//
-//
-////                tableView.headerView(forSection: index)?.backgroundColor = .red
-//
-//                let section = seats.firstIndex(of: selectedSeat!)
-//                for order in selectedSeat!.orders {
-//
-//                    let index = seats[section!].orders.firstIndex(of: (order))!
-//                    let indexPath = IndexPath(row: index, section: section!)
-//
-//                    switch selectedSeat {
-//
-//                    case _ where order.seat == newValue:
-//                        tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
-//
-//                    case _ where ModifierController.shared.ordersToMove.contains(order):
-//                        tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-//
-//                    default:
-//                        tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//                    }
-//                }
-//            }
+            
         }
         didSet {
-//            if selectedSeat != nil {
-//                if let index = seats.firstIndex(of: selectedSeat!) {
-//                    tableView.headerView(forSection: index)?.backgroundColor = .cyan
-//                }
-//
-//            }
+            
         }
     }
     var selectedCell = UITableViewCell()
@@ -96,13 +67,6 @@ class SeatsViewController: UIViewController {
      the number of rows per section and name of the orders is determined by the orderlist in each seat
      */
     
-//    var seats : [Seat] = []
-//        // Seat(seatnumber: 1), Seat(seatnumber: 2)
-//        {
-//        didSet{
-//            tableView.reloadData()
-//        }
-//    }
     
     
     
@@ -114,7 +78,7 @@ class SeatsViewController: UIViewController {
             return SeatsController.shared.seats
         }
         
-       
+        
     }
     
     
@@ -129,7 +93,7 @@ class SeatsViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         
-//        prevents bouncing on reload data
+        //        prevents bouncing on reload data
         self.tableView.estimatedRowHeight = 0
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
@@ -143,12 +107,9 @@ class SeatsViewController: UIViewController {
             createNewSeat()
         }
         
-//        if self.seats.last?.orders == nil {
-//            self.seats.last?.orders = [OrderItem(name: name, isMainOrder: true, price: price)]
-//        }
-//        else {
+        
         SeatsController.shared.seats.last?.orders.append(OrderItem(name: name, isMainOrder: true, price: price, seat: SeatsController.shared.seats.last))
-//        }
+        
         tableView.reloadData()
     }
     
@@ -167,12 +128,13 @@ class SeatsViewController: UIViewController {
         
         
         let newSeat = Seat(seatnumber: seats.count + 1)
+        //        seats.count > 0 ? newSeat.seatNumber = seats[seats.count - 1].seatNumber + 1 : (newSeat.seatNumber = seats.count + 1)
         
         SeatsController.shared.seats.append(newSeat)
-//        selectedSeat = newSeat
-
+        //        selectedSeat = newSeat
+        
         tableView.reloadData()
-
+        
         tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: seats.count - 1), at: .bottom, animated: false)
         
     }
@@ -191,39 +153,38 @@ class SeatsViewController: UIViewController {
         OrderItemController.shared.orders.append(food)
         selectedSeat.orders.append(food)
         
-//        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, price: steak2!.price, uuid:  steak2!.uuid)
-//        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, price: potato!.price, uuid:  potato!.uuid)
-//        cheese = Modifier(name: "cheese", isModifierFor: potato!, mainOrder: food, price: cheese!.price, uuid: cheese!.uuid)
-//        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, price: baked!.price, uuid:  baked!.uuid)
-//        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, price: burned!.price, uuid:  burned!.uuid)
-//        potato4 = Modifier(name: "fries", isModifierFor: burned!, mainOrder: food, price: potato4!.price, uuid:  potato4!.uuid)
-//        potato3 = Modifier(name: "sauce", isModifierFor: steak2!, mainOrder: food, price: potato3!.price, uuid: potato3!.uuid)
+        //        steak2 = Modifier(name: "steak", isModifierFor: food, mainOrder: food, price: steak2!.price, uuid:  steak2!.uuid)
+        //        potato = Modifier(name: "potato", isModifierFor: food, mainOrder: food, price: potato!.price, uuid:  potato!.uuid)
+        //        cheese = Modifier(name: "cheese", isModifierFor: potato!, mainOrder: food, price: cheese!.price, uuid: cheese!.uuid)
+        //        baked = Modifier(name: "baked", isModifierFor: cheese!, mainOrder: food, price: baked!.price, uuid:  baked!.uuid)
+        //        burned = Modifier(name: "burned", isModifierFor: baked!, mainOrder: food, price: burned!.price, uuid:  burned!.uuid)
+        //        potato4 = Modifier(name: "fries", isModifierFor: burned!, mainOrder: food, price: potato4!.price, uuid:  potato4!.uuid)
+        //        potato3 = Modifier(name: "sauce", isModifierFor: steak2!, mainOrder: food, price: potato3!.price, uuid: potato3!.uuid)
         
         
-//        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food, seat: selectedSeat)
-//        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: steak2!, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: steak2!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: food, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: potato!, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: cheese!, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: baked!, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: burned!, mainOrder: food, seat: selectedSeat)
+        //        ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: steak2!, mainOrder: food, seat: selectedSeat)
         
         
         
-
+        
         let section = seats.firstIndex(of: selectedSeat)!
         let indexPath = IndexPath(row: selectedSeat.orders.count - 1, section: section)
         
-//        selectedOrder == nil ? (selectedOrder = food) : (selectedOrder = selectedOrder)
         selectedOrder = food
         self.selectedSeat == nil ? (self.selectedSeat = selectedOrder!.seat!) : (self.selectedSeat = selectedSeat)
         tableView.reloadData()
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         #warning("selectedSeat is randomley being set to nil here")
     }
     
     @IBAction func mod1ButtonTapped(_ sender: Any) {
-            selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
         guard selectedSeat != nil && potato != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
         potato = Modifier(name: "potato", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: 0.39, uuid: potato!.uuid)
@@ -234,13 +195,12 @@ class SeatsViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: potato!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        
         print("🧠Blah 1")
         reloadAndScroll()
     }
     
-   
+    
     
     
     @IBAction func button3Tapped(_ sender: Any) {
@@ -251,8 +211,8 @@ class SeatsViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: cheese!, isModifierFor: dict[selectedOrder!.uuid + potato!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        //        ModifierController.shared.ordersToMove.append(selectedOrder!)
+        //        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
         
         print("🧠Blah 2")
         reloadAndScroll()
@@ -268,9 +228,9 @@ class SeatsViewController: UIViewController {
         
         ModifierController.shared.addModifierToOrder(modifier: baked!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
+//        we need to set ordersToMove to nothing here or when something is moving it will leave some mods behind
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+     
         print("🧠Blah 3")
         reloadAndScroll()
     }
@@ -289,8 +249,7 @@ class SeatsViewController: UIViewController {
         ModifierController.shared.addModifierToOrder(modifier: potato3!, isModifierFor: selectedOrder!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        
         print("🧠Blah 1")
         reloadAndScroll()
     }
@@ -304,15 +263,13 @@ class SeatsViewController: UIViewController {
         
         
         potato4 = Modifier(name: "fries", isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, price: potato4!.price, uuid:  potato4!.uuid)
-//        potato3 = Modifier(name: "sauce", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: potato3!.price, uuid: potato3!.uuid)
         
         
         
         ModifierController.shared.addModifierToOrder(modifier: potato4!, isModifierFor: dict[selectedOrder!.uuid + cheese!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        
         print("🧠Blah 1")
         reloadAndScroll()
         
@@ -326,16 +283,14 @@ class SeatsViewController: UIViewController {
         guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
         
-//        potato4 = Modifier(name: "fries", isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, price: potato4!.price, uuid:  potato4!.uuid)
-
+        
         burned = Modifier(name: "burned", isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, price: burned!.price, uuid:  burned!.uuid)
         
         
         ModifierController.shared.addModifierToOrder(modifier: burned!, isModifierFor: dict[selectedOrder!.uuid + potato4!.uuid]!, mainOrder: selectedOrder!, seat: selectedSeat!)
         
         ModifierController.shared.ordersToMove = []
-//        ModifierController.shared.ordersToMove.append(selectedOrder!)
-//        ModifierController.shared.ordersToMove.append(contentsOf: selectedOrder!.totalMods)
+        
         print("🧠Blah 1")
         reloadAndScroll()
         
@@ -349,7 +304,8 @@ class SeatsViewController: UIViewController {
     
     @IBAction func removeSeat(_ sender: Any) {
         guard let selectedSeat = selectedSeat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return}
-        
+        let index = seats.firstIndex(of: selectedSeat)!
+        //        ModifierController.shared.ord
         ModifierController.shared.removeSeat(seat: selectedSeat)
         
         
@@ -358,9 +314,15 @@ class SeatsViewController: UIViewController {
         self.selectedSeat = nil
         
         
-        if seats.count > 0 {
-            tableView.reloadData()
-            tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: seats.count - 1), at: .bottom, animated: false)
+        if seats.count >= index - 1 {
+            //            seats.compactMap({$0.seatNumber = seats.firstIndex(of: $0)! + 1})
+            if index - 1 <= 0 {
+                tableView.reloadData()
+            } else {
+                tableView.reloadData()
+                tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: index - 1), at: .bottom, animated: false)
+            }
+            
             
         } else {
             tableView.reloadData()
@@ -385,7 +347,7 @@ class SeatsViewController: UIViewController {
         
         //selectedOrder == nil ? (selectedOrder = food) : (selectedOrder = selectedOrder)
         tableView.reloadData()
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         self.selectedOrder = nil
         
     }
@@ -393,29 +355,13 @@ class SeatsViewController: UIViewController {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @IBAction func removeMod(_ sender: Any) {
         guard selectedOrder != nil && selectedOrder!.totalMods.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
         ModifierController.shared.removeModFromOrder(modifierUUID: potato!.uuid, fromModifier: selectedOrder! )
-//        ModifierController.shared.removeMod(uuid: cheese!.uuid, fromModifier: dict[selectedOrder!.uuid + potato!.uuid]! as! Modifier)
+        //        ModifierController.shared.removeMod(uuid: cheese!.uuid, fromModifier: dict[selectedOrder!.uuid + potato!.uuid]! as! Modifier)
         print("🧠Blah delete")
         reloadAndScroll()
     }
-    
-    
-    
-    
-    
-    
     
     
     
@@ -439,12 +385,12 @@ class SeatsViewController: UIViewController {
 }
 //orderMoving
 extension SeatsViewController {
- 
+    
     
     
     
     func createNewSeat(){
-//        seats.append(Seat(seatnumber: seats.count + 1))
+        //        seats.append(Seat(seatnumber: seats.count + 1))
         let newSeat = Seat(seatnumber: seats.count + 1)
         print("🤚\(newSeat.seatNumber)")
         SeatsController.shared.seats.append(newSeat)
@@ -483,26 +429,13 @@ extension SeatsViewController {
                     if ModifierController.shared.ordersToMove.contains(order){
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        #warning("new")
                         order.seat = SeatsController.shared.seats[seat.tag]
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                         
                         SeatsController.shared.seats[seatIndex].orders.removeAll(where: {$0.text == order.text})
                         ModifierController.shared.ordersToMove.removeAll(where: {$0.text == order.text})
-                
+                        
                         SeatsController.shared.seats[seat.tag].orders.append(order)
-                    
+                        
                     }
                 }
             }
@@ -524,7 +457,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     
-   
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if seats[indexPath.section].orders[indexPath.row].isMainOrder == false{
@@ -543,8 +476,8 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard seats[section].orders.count > 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return 0
-        }
+        guard seats[section].orders.count > 0 else { return 0}
+        
         let orders = seats[section].orders
         return orders.count
     }
@@ -553,15 +486,17 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        
+        //this will add a button to our section headers for us to send orders to
         let addButton = UIButton()
-        addButton.setTitle("Seat \(seats[section].seatNumber)", for: .normal)
-        addButton.backgroundColor = .red
-        if seats[section] == selectedSeat {
-            addButton.backgroundColor = .cyan
-        }
-        addButton.tag = section
         
+        addButton.setTitle("Seat \(seats[section].seatNumber)", for: .normal)
+        
+        //if the section is selected, it will turn brown
+        addButton.backgroundColor = seats[section] == selectedSeat ? .brown : .red
+        
+        //the tag number will be the same number as the section number
+        addButton.tag = section
+        addButton.showsTouchWhenHighlighted = true
         addButton.addTarget(self, action: #selector(assignOrderTo(_:)), for: .touchUpInside)
         
         return addButton
@@ -570,198 +505,181 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var cell = UITableViewCell()
+        //        guard seats[indexPath.section].orders.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return UITableViewCell() }
+
+        var orderCell = UITableViewCell() as? OrderTableViewCell
+        var modifierCell = UITableViewCell() as? ModifierTableViewCell
         let currentOrder = seats[indexPath.section].orders[indexPath.row]
-        guard seats[indexPath.section].orders.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return cell }
+        var currentCell = UITableViewCell()
         
         switch currentOrder.isMainOrder {
             
         case true:
-            cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath) as! OrderTableViewCell
-            cell.textLabel?.text = seats[indexPath.section].orders[indexPath.row].name
-            cell.textLabel?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-            cell.detailTextLabel?.text = "\(seats[indexPath.section].orders[indexPath.row].price)"
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20.0)
-            cell.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 20.0)
+            
+            orderCell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath) as? OrderTableViewCell
+            orderCell?.textLabel?.text = seats[indexPath.section].orders[indexPath.row].name
+            orderCell?.textLabel?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+            orderCell?.detailTextLabel?.text = "\(seats[indexPath.section].orders[indexPath.row].price)"
+            orderCell?.detailTextLabel?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+            orderCell?.textLabel?.font = UIFont.boldSystemFont(ofSize: 20.0)
+            orderCell?.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 20.0)
+            orderCell?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            orderCell?.layer.borderWidth = 0
+            
+            currentCell = orderCell!
             
         default:
-            cell = tableView.dequeueReusableCell(withIdentifier: "modifierCell", for: indexPath) as! ModifierTableViewCell
+            modifierCell = tableView.dequeueReusableCell(withIdentifier: "modifierCell", for: indexPath) as? ModifierTableViewCell
             
             
             if seats[indexPath.section].orders[indexPath.row] == seats[indexPath.section].orders[indexPath.row] as? Modifier {
                 let mod = seats[indexPath.section].orders[indexPath.row] as! Modifier
                 
-                cell.textLabel?.text = "    " + mod.name + " is Modifier for \(mod.isModifierFor.name) main is \(mod.mainOrder.name)"
-                cell.detailTextLabel?.text = "\(seats[indexPath.section].orders[indexPath.row].price)"
-                cell.textLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
-                cell.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
+                modifierCell?.textLabel?.text = "    " + mod.name + " is Modifier for \(mod.isModifierFor.name) main is \(mod.mainOrder.name)"
+                modifierCell?.detailTextLabel?.text = "\(seats[indexPath.section].orders[indexPath.row].price)"
+                modifierCell?.detailTextLabel?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+                modifierCell?.textLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
+                modifierCell?.textLabel?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+                modifierCell?.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
+                modifierCell?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                modifierCell?.layer.borderWidth = 0
+                
+                currentCell = modifierCell!
+               
             }
         }
+        
         
         if selectedSeat != nil {
-            if currentOrder.seat == selectedSeat! {
-                cell.layer.borderWidth = 1
-                cell.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-                cell.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
-            } else {
-                cell.layer.borderWidth = 0
-                cell.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            }
-        }
-        if ModifierController.shared.ordersToMove.contains(seats[indexPath.section].orders[indexPath.row]){
-            cell.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        }
-        
-
-        
-
-        
-        
-        return cell
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
-        print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
-        
-        
-        
-        let deSelectedOrder = seats[indexPath.section].orders[indexPath.row]
-        
-        
-        
-        
-        
-        let orderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
-        
-        
-        ModifierController.shared.ordersToMove.remove(at: orderIndex)
-        switch deSelectedOrder.seat {
-        case _ where deSelectedOrder.seat == selectedSeat:
-            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+            currentCell.layer.backgroundColor = currentOrder.seat == selectedSeat ? #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1) : #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
-        case _ where ModifierController.shared.ordersToMove.contains(deSelectedOrder):
-            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-            
-        default:
-            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        }
-        //asd
-//        vv this removes the deselected orders from orderToMove
-        for mod in deSelectedOrder.totalMods {
-//        if ModifierController.shared.ordersToMove.contains(i) {
-            
-            
-            let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
-            
-            let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
-            
-            tableView.deselectRow(at: modIndexPath, animated: true)
-            
-            
-            ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
-            
-            
-            
-            switch mod.seat {
-            case _ where mod.seat == selectedSeat:
-                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
-                
-            case _ where ModifierController.shared.ordersToMove.contains(mod):
-                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-                
-            default:
-                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            }
-        }
-    }
-    
-    
-    func stuff(){
-        
-    }
-    
-//    func selectRow(){
-//        guard let selectedOrder = selectedOrder, let selectedOrderSeat = selectedOrder.seat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-//        guard let section = seats.firstIndex(of: selectedOrderSeat) else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-//        guard let index = seats[section].orders.firstIndex(of: (selectedOrder)) else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-//        let indexPath = IndexPath(row: index, section: section)
-//
-//
-//        guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
-//
-//
-//        print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
-//
-//        let currentOrder = seats[indexPath.section].orders[indexPath.row]
-//        self.selectedOrder = seats[indexPath.section].orders[indexPath.row]
-//
-//
-//
-//
-//
-//
-//
-//        selectedSeat = self.selectedOrder!.seat
-//
-//
-//
-//
-//
-//
-//
-//
-//        if ModifierController.shared.ordersToMove.contains(currentOrder) == false {
-//            //            ordersToMove.append(currentOrder)
-//            //            ordersToMove.append(contentsOf: currentOrder.totalMods)
-//
-//
-//        }
-//
-//        switch currentOrder.isMainOrder {
-//        case true:
-//            ModifierController.shared.ordersToMove.append(currentOrder)
-//            ModifierController.shared.ordersToMove.append(contentsOf: currentOrder.totalMods)
-//            let index = seats[indexPath.section].orders.firstIndex(of: currentOrder)
-////            tableView.deselectRow(at: IndexPath(row: index!, section: indexPath.section), animated: false)
-//            tableView.cellForRow(at: IndexPath(row: index!, section: indexPath.section))?.layer.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
-//            //            print("🧶 \(currentOrder.name)         \(currentOrder.seat?.seatNumber)")
-//            let totalMods = seats[indexPath.section].orders[indexPath.row].totalMods
-//
-//
-//
-//            if totalMods.count > 0 {
-//
-//                for i in totalMods {
-//                    if totalMods.contains(i){
-//
-//                        //                        let orderIndex = orders.firstIndex(of: currentOrder)
-//
-//                        let index = seats[indexPath.section].orders.firstIndex(of: i)!
-//
-//                        //                        print("🧶 \(i.name)         \(i.seat?.seatNumber)")
-//                        //                        print("🌹\(orderIndex)")
-//                        //                        print("🅰️\(index)")
-//
-//                        //                        tableView.selectRow(at: IndexPath(row: index, section: indexPath.section), animated: false, scrollPosition: UITableView.ScrollPosition(rawValue: 0)!)
-//                        tableView.cellForRow(at: IndexPath(row: index, section: indexPath.section))?.layer.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
-//                        //                        tableView.cellForRow(at: IndexPath(row: index, section: indexPath.section))?.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
-//
-//                    }
-//                }
+//            if currentOrder.seat == selectedSeat! {
+////                currentCell.layer.borderWidth = 1
+////                currentCell.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+//                currentCell.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+//            } else {
+////                currentCell.layer.borderWidth = 0
+//                currentCell.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //            }
-//        default:
-//
-//            //            print("🅰️\(orders[indexPath.row].name)")
-//            //            print("🌹\(orders[indexPath.row].totalMods.count)")
-//            tableView.deselectRow(at: indexPath, animated: false)
-//
-//        }
-//    }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        if selectedOrder != nil {
+            
+            orderCell?.layer.borderWidth = currentOrder == selectedOrder ? 3 : 0
+            
+            
+//            if currentOrder == selectedOrder {
+//                orderCell?.layer.borderWidth = 3
+                orderCell?.layer.borderColor = #colorLiteral(red: 0, green: 0.9339144826, blue: 0, alpha: 1)
+//            } else {
+//                orderCell?.layer.borderWidth = 0
+                //orderCell?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//            }
+            if currentOrder == currentOrder as? Modifier{
+                let currentMod = currentOrder as! Modifier
+                
+                
+                modifierCell?.layer.borderWidth = currentMod.mainOrder == selectedOrder ? 3 : 0
+                
+                
+//                if currentMod.mainOrder == selectedOrder {
+//                    modifierCell?.layer.borderWidth = 3
+                    modifierCell?.layer.borderColor = #colorLiteral(red: 0, green: 0.9339144826, blue: 0, alpha: 1)
+//                } else {
+//                    modifierCell?.layer.borderWidth = 0
+//                    //                    modifierCell?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//                }
+            }
+            
+        }
+        
+        if ModifierController.shared.ordersToMove.contains(seats[indexPath.section].orders[indexPath.row]){
+            modifierCell?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            orderCell?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        }
+        
+        
+    
+        
+        if currentOrder.isMainOrder == true {
+            return orderCell!
+        } else {
+            return modifierCell!
+        }
+        
+        
+    }
+    
+    
+    
+    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    //
+    //        guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
+    //        print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
+    //
+    //
+    //
+    //        let deSelectedOrder = seats[indexPath.section].orders[indexPath.row]
+    //
+    //
+    //
+    //
+    //
+    //        let orderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
+    //
+    //
+    //        ModifierController.shared.ordersToMove.remove(at: orderIndex)
+    //        switch deSelectedOrder.seat {
+    //        case _ where deSelectedOrder.seat == selectedSeat:
+    //            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+    //
+    //        case _ where ModifierController.shared.ordersToMove.contains(deSelectedOrder):
+    //            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+    //
+    //        default:
+    //            tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    //        }
+    //        //asd
+    ////        vv this removes the deselected orders from orderToMove
+    //        for mod in deSelectedOrder.totalMods {
+    ////        if ModifierController.shared.ordersToMove.contains(i) {
+    //
+    //
+    //            let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
+    //
+    //            let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
+    //
+    //            tableView.deselectRow(at: modIndexPath, animated: true)
+    //
+    //
+    //            ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
+    //
+    //
+    //
+    //            switch mod.seat {
+    //            case _ where mod.seat == selectedSeat:
+    //                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+    //
+    //            case _ where ModifierController.shared.ordersToMove.contains(mod):
+    //                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+    //
+    //            default:
+    //                tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    //            }
+    //        }
+    //    }
+    
+    
+    
+    
+    
     
     
     
@@ -770,29 +688,24 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        if tableView.cellForRow(at: indexPath) != nil {
-        //            deSelectAllButSelectedCells(indexPath: indexPath)
-        //        }
-        guard seats[indexPath.section].orders.count != 0 && seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        //      seats[indexPath.section].orders[indexPath.row] != seats[indexPath.section].orders[indexPath.row] as? Modifier
+        
+        guard seats[indexPath.section].orders.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         print("🧠\(seats[indexPath.section].orders[indexPath.row].name)")
         
-        let currentOrder = seats[indexPath.section].orders[indexPath.row]
-        let oldSeat = selectedSeat!
+        var currentOrder = seats[indexPath.section].orders[indexPath.row]
+        
         if ModifierController.shared.ordersToMove.contains(currentOrder) == false {
             
             
             
-            selectedOrder = seats[indexPath.section].orders[indexPath.row]
-            
-            
-            selectedSeat = selectedOrder?.seat
-            
-            
+            print("👈\(currentOrder)")
             
             
             switch currentOrder.isMainOrder {
             case true:
-                
+                selectedOrder = seats[indexPath.section].orders[indexPath.row]
+                selectedSeat = selectedOrder?.seat
                 
                 ModifierController.shared.ordersToMove.append(currentOrder)
                 ModifierController.shared.ordersToMove.append(contentsOf: currentOrder.totalMods)
@@ -800,6 +713,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
                 let index = seats[indexPath.section].orders.firstIndex(of: currentOrder)
                 tableView.cellForRow(at: IndexPath(row: index!, section: indexPath.section))?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
                 
+                //we need to highlight the total mods or it wont highlight any nested mods
                 let totalMods = seats[indexPath.section].orders[indexPath.row].totalMods
                 if totalMods.count > 0 {
                     
@@ -810,173 +724,109 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
                             let index = seats[indexPath.section].orders.firstIndex(of: i)!
                             let cellIndexPath = IndexPath(row: index, section: indexPath.section)
                             
-                            
                             tableView.cellForRow(at: cellIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
                         }
                     }
                 }
+            // if they select a mod (small cell) then vv this will behave as though they selected a main order
             default:
-                tableView.deselectRow(at: indexPath, animated: false)
+                
+                
+                //                for i in seats[indexPath.section].orders {
+                //                    if seats[indexPath.section].orders[indexPath.row] == seats[indexPath.section].orders[indexPath.row] as? Modifier {
+                
+                let selectedMod = seats[indexPath.section].orders[indexPath.row] as! Modifier
+                if seats[indexPath.section].orders.contains(selectedMod.mainOrder){
+                    
+                    //                        let mainIndex = seats[indexPath.section].orders.firstIndex(of: selectedMod.mainOrder)
+                    
+                    //                        if i == selectedMod.mainOrder {
+                    
+                    
+                    currentOrder = selectedMod.mainOrder
+                    selectedOrder = currentOrder
+                    selectedSeat = currentOrder.seat
+                    
+                    //need to append the current order seperate from the total mods loop since the current order is not in its own loop
+                    ModifierController.shared.ordersToMove.append(currentOrder)
+                    ModifierController.shared.ordersToMove.append(contentsOf: currentOrder.totalMods)
+                    
+                    let index = seats[indexPath.section].orders.firstIndex(of: currentOrder)
+                    tableView.cellForRow(at: IndexPath(row: index!, section: indexPath.section))?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                    
+                    //we need to highlight the total mods or it wont highlight any nested mods
+                    let totalMods = seats[indexPath.section].orders[indexPath.row].totalMods
+                    if totalMods.count > 0 {
+                        
+                        for i in totalMods {
+                            if totalMods.contains(i){
+                                
+                                
+                                let index = seats[indexPath.section].orders.firstIndex(of: i)!
+                                let cellIndexPath = IndexPath(row: index, section: indexPath.section)
+                                
+                                tableView.cellForRow(at: cellIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                            }
+                        }
+                    }
+                    //                        }
+                }
+                
+                //                    }
+                //                }
             }
-        } else {
-            let deSelectedOrder = seats[indexPath.section].orders[indexPath.row]
             
+        //deselects orders and removes them from ordersToMove
+        } else if ModifierController.shared.ordersToMove.contains(currentOrder) == true{
             
-            
-            
-            
-            let orderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
-            
-            
-            ModifierController.shared.ordersToMove.remove(at: orderIndex)
-            
-            
-            
-            
-            switch deSelectedOrder.seat {
-            case _ where deSelectedOrder.seat == selectedSeat:
-                tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+            switch currentOrder.isMainOrder {
+            case true:
+                let deSelectedOrder = seats[indexPath.section].orders[indexPath.row]
+                let deSelectedOrderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
                 
-            case _ where ModifierController.shared.ordersToMove.contains(deSelectedOrder):
-                tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                ModifierController.shared.ordersToMove.remove(at: deSelectedOrderIndex)
                 
+                
+                //vv this removes the deselected modifiers from orderToMove
+                for mod in deSelectedOrder.totalMods {
+                    
+                    
+                    let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
+                    let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
+                    
+                    tableView.deselectRow(at: modIndexPath, animated: true)
+                    
+                    
+                    ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
+                }
             default:
-                tableView.cellForRow(at: indexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            }
-            
-            
-            
-            //        vv this removes the deselected orders from orderToMove
-            for mod in deSelectedOrder.totalMods {
-                //        if ModifierController.shared.ordersToMove.contains(i) {
-                
-                
-                let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
-                
-                let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
-                
-                tableView.deselectRow(at: modIndexPath, animated: true)
-                
-                
-                ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
-                
-                
-                
-                switch mod.seat {
-                case _ where mod.seat == selectedSeat:
-                    tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.7588697672, green: 0.9315800667, blue: 0.9670193791, alpha: 1)
+                //                for i in seats[indexPath.section].orders {
+                if seats[indexPath.section].orders[indexPath.row] == seats[indexPath.section].orders[indexPath.row] as? Modifier {
                     
-                case _ where ModifierController.shared.ordersToMove.contains(mod):
-                    tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                    let selectedMod = seats[indexPath.section].orders[indexPath.row] as! Modifier
+                    let deSelectedOrder = selectedMod.mainOrder
+                    let deSelectedOrderIndex = ModifierController.shared.ordersToMove.firstIndex(of: deSelectedOrder)!
                     
-                default:
-                    tableView.cellForRow(at: modIndexPath)?.layer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                    ModifierController.shared.ordersToMove.remove(at: deSelectedOrderIndex)
+                    
+                    for mod in deSelectedOrder.totalMods {
+                        
+                        
+                        let modIndex = seats[indexPath.section].orders.firstIndex(of: mod)!
+                        let modIndexPath = IndexPath(row: modIndex, section: indexPath.section)
+                        
+                        tableView.deselectRow(at: modIndexPath, animated: true)
+                        
+                        
+                        ModifierController.shared.ordersToMove.removeAll(where: {$0 == mod || $0 == deSelectedOrder})
+                    }
                 }
             }
-            
         }
-    
-    
-        
-//
-//                let oldSeatIndex = seats.firstIndex(of: oldSeat)!
-//                let seatIndex = seats.firstIndex(of: selectedSeat!)
-        
-//                tableView.reloadSections([oldSeatIndex,seatIndex!], with: .none)
         tableView.reloadData()
-    }
-    
-    
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        if tableView.cellForRow(at: indexPath) != nil {
-//            deSelectAllButSelectedCells(indexPath: indexPath)
-//        }
-//
-//        let currentOrder = seats[indexPath.section].orders[indexPath.row]
-//
-//        switch currentOrder.isMainOrder {
-//        case true:
-//            let totalMods = seats[indexPath.section].orders[indexPath.row].totalMods
-//
-//            print("🌹\(totalMods.count)")
-//            if totalMods.count > 0 {
-//
-//                for i in totalMods {
-//                    if totalMods.contains(i){
-//                        let orderIndex = orders.firstIndex(of: seats[indexPath.section].orders[indexPath.row])
-//                        let index = totalMods.firstIndex(of: i)!
-//
-//                        //                    orderIndex! +
-//                        tableView.selectRow(at: IndexPath(row: orderIndex! + index + 1, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition(rawValue: 0)!)
-//                    }
-//                }
-//            }
-//        default:
-//            print("🌹\(orders[indexPath.row].uuid)")
-//            print("🅰️\(orders[indexPath.row].name)")
-//            print("🌹\(orders[indexPath.row].totalMods.count)")
-//            tableView.deselectRow(at: indexPath, animated: false)
-//
-//        }
-//
-//        selectedOrder = orders[indexPath.row]
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func deSelectAllButSelectedCells(indexPath: IndexPath){
-        if selectedCell != tableView.cellForRow(at: indexPath) {
-            self.tableView?.indexPathsForSelectedRows?.forEach(
-                {
-                    if tableView.cellForRow(at: $0) != tableView.cellForRow(at: indexPath){
-                        self.tableView.deselectRow(at: $0, animated: true)
-                    }})
-        }
-        selectedCell = tableView.cellForRow(at: indexPath)!
     }
 }
 
-//var cell = UITableViewCell()
-//
-//let currentOrder = orders[indexPath.row]
-//
-//switch currentOrder.isMainOrder {
-//case true:
-//    cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath) as! OrderTableViewCell
-//    cell.textLabel?.text = orders[indexPath.row].name
-//    cell.detailTextLabel?.text = "\(orders[indexPath.row].price)"
-//    cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20.0)
-//    cell.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 20.0)
-//
-//default:
-//    cell = tableView.dequeueReusableCell(withIdentifier: "modifierCell", for: indexPath) as! ModifierTableViewCell
-//
-//
-//    if orders[indexPath.row] == orders[indexPath.row] as? Modifier {
-//        let mod = orders[indexPath.row] as! Modifier
-//
-//        cell.textLabel?.text = "    " + mod.name + " is Modifier for \(mod.isModifierFor.name)"
-//        cell.detailTextLabel?.text = "\(orders[indexPath.row].price)"
-//        cell.textLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
-//        cell.detailTextLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
-//    }
-//}
-//return cell
 
 
 
@@ -989,6 +839,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 
+//unused
 //Mark: new order item Alert
 extension SeatsViewController {
     @IBAction private func addNewOrderItemAlert(_ sender: Any) {
@@ -1022,13 +873,13 @@ extension SeatsViewController {
                 
                 
                 //if you dont do this, nothing will be appended to  seats.last?.orders because orders is empty
-//                if self.seats.last?.orders == nil {
-//                    self.seats.last?.orders = [OrderItem(name: textField.text!, isMainOrder: true, price: price)]
-//                }
-//                else {
+                //                if self.seats.last?.orders == nil {
+                //                    self.seats.last?.orders = [OrderItem(name: textField.text!, isMainOrder: true, price: price)]
+                //                }
+                //                else {
                 
                 SeatsController.shared.seats.last?.orders.append(OrderItem(name: textField.text!, isMainOrder: true, price: price, seat: SeatsController.shared.seats.last))
-//                }
+                //                }
                 
                 self.tableView.reloadData()
             }
@@ -1052,9 +903,5 @@ extension SeatsViewController {
         potato4 = Modifier(name: "fries", isModifierFor: steak, mainOrder: steak, price: 5.00)
         potato5 = Modifier(name: "cheese fries", isModifierFor: steak, mainOrder: steak, price: 5.00)
     }
-    
-    
-    
-    
 }
 
