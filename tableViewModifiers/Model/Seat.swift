@@ -12,11 +12,15 @@ class Seat {
     var orders : [OrderItem] = []
     var seatNumber : Int
     var uuid : String
+    var isCourse : Bool
+    var name : String
     
     
-    init(seatnumber: Int, uuid: String = UUID().uuidString) {
+    init(seatnumber: Int, uuid: String = UUID().uuidString, isCourse: Bool, name: String) {
         self.seatNumber = seatnumber
         self.uuid = uuid
+        self.isCourse = isCourse
+        self.name = name
     }
     
     
@@ -26,7 +30,7 @@ class Seat {
 extension Seat: Equatable {
     static func == (lhs: Seat, rhs: Seat) -> Bool {
         
-        return lhs.uuid == rhs.uuid && lhs.seatNumber == rhs.seatNumber
+        return lhs.uuid == rhs.uuid && lhs.seatNumber == rhs.seatNumber && lhs.isCourse == rhs.isCourse && lhs.name == rhs.name
     }
 }
 extension Date{

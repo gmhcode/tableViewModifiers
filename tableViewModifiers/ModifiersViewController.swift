@@ -32,7 +32,7 @@ class ViewController: UIViewController {
             return ModifierController.shared.modDictionary
         }
     }
-    var seat = Seat(seatnumber: 0)
+    var seat = Seat(seatnumber: 0, isCourse: false, name: "0")
     var steak = OrderItem(name: "steak", isMainOrder: true, price: 10.00, seat: nil)
     var potato : Modifier?
     var cheese : Modifier?
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     
     @IBAction func mainOrderButtonTapped(_ sender: Any)
     {
-        var seat = Seat(seatnumber: 0)
+        var seat = Seat(seatnumber: 0, isCourse: false, name: "0")
         let food = OrderItem(name: "food \(orders.count)", isMainOrder: true, price: 10.00, seat: seat)
         OrderItemController.shared.orders.append(food)
         

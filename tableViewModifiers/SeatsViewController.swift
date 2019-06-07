@@ -31,6 +31,7 @@ class SeatsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var selectedColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
     lazy var defaultCellHeight = view.bounds.width * 0.10
+    
     var orders : [OrderItem] {
         get{
             return OrderItemController.shared.orders
@@ -45,7 +46,6 @@ class SeatsViewController: UIViewController {
     }
     
     
-    
     var selectedSeat : Seat? {
         willSet {
             
@@ -54,6 +54,11 @@ class SeatsViewController: UIViewController {
             
         }
     }
+    
+    
+    var selectedCourse : Seat?
+    
+    
     var selectedCell = UITableViewCell()
     var selectedOrder : OrderItem?
     /*
@@ -68,17 +73,12 @@ class SeatsViewController: UIViewController {
      */
     
     
-    
-    
-    
     var seats : [Seat]
         // Seat(seatnumber: 1), Seat(seatnumber: 2)
         {
         get {
             return SeatsController.shared.seats
         }
-        
-        
     }
     
     
@@ -114,24 +114,17 @@ class SeatsViewController: UIViewController {
     }
     
     
-    
-    @IBAction func addChicken(_ sender: Any) {
-        addNewItem(name: "cat", price: 10.00)
-    }
-    
-    @IBAction func addDrink(_ sender: Any) {
-        addNewItem(name: "Drink", price: 1.00)
-    }
+ 
     
     
     @IBAction func newSeatButtonTapped(_ sender: Any) {
         
         
-        let newSeat = Seat(seatnumber: seats.count + 1)
+        let newSeat = Seat(seatnumber: seats.count + 1, isCourse: false, name: "\(seats.count + 1)")
         //        seats.count > 0 ? newSeat.seatNumber = seats[seats.count - 1].seatNumber + 1 : (newSeat.seatNumber = seats.count + 1)
         
         SeatsController.shared.seats.append(newSeat)
-        //        selectedSeat = newSeat
+        selectedSeat = newSeat
         
         tableView.reloadData()
         
@@ -139,13 +132,24 @@ class SeatsViewController: UIViewController {
         
     }
     
+    @IBAction func newCourseButtonTapped(_ sender: Any) {
+        createNewCourse()
+        tableView.reloadData()
+    }
     
     
     @IBAction func newOrderButtonTapped(_ sender: Any) {
-        var selectedSeat = seats[seats.count - 1]
-        if self.selectedSeat != nil {
-            selectedSeat = self.selectedSeat!
-        }
+        
+        guard var selectedSeat = selectedSeat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        
+//        var selectedSeat = seats[seats.count - 1]
+        
+        
+        
+//        if self.selectedSeat != nil && selectedSeat.isCourse == false {
+//            selectedSeat = self.selectedSeat!
+//        }
         
         
         
@@ -177,14 +181,26 @@ class SeatsViewController: UIViewController {
         let indexPath = IndexPath(row: selectedSeat.orders.count - 1, section: section)
         
         selectedOrder = food
-        self.selectedSeat == nil ? (self.selectedSeat = selectedOrder!.seat!) : (self.selectedSeat = selectedSeat)
+        
+        self.selectedSeat = self.selectedSeat == nil ? selectedOrder!.seat! :  selectedSeat
+        
         tableView.reloadData()
+        
         tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         #warning("selectedSeat is randomley being set to nil here")
     }
     
+    
+    
+    
+    
+    
+    
+    
     @IBAction func mod1ButtonTapped(_ sender: Any) {
-        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+        
+//        selectedSeat = selectedSeat == nil ? selectedOrder?.seat : selectedSeat
+        
         guard selectedSeat != nil && potato != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
         potato = Modifier(name: "potato", isModifierFor: selectedOrder!, mainOrder: selectedOrder!, price: 0.39, uuid: potato!.uuid)
@@ -250,7 +266,7 @@ class SeatsViewController: UIViewController {
     
     
     @IBAction func button5Tapped(_ sender: Any) {
-        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+//        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
         guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
         
@@ -268,7 +284,7 @@ class SeatsViewController: UIViewController {
     
     
     @IBAction func button6Tapped(_ sender: Any) {
-        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
+//        selectedSeat == nil ? (selectedSeat = selectedOrder?.seat) : (selectedSeat = selectedSeat)
         guard selectedSeat != nil && potato3 != nil && selectedOrder != nil else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
         
         
@@ -290,11 +306,44 @@ class SeatsViewController: UIViewController {
         
     }
     
+    @IBAction func removeCourse(_ sender: Any) {
+        removeCourse()
+    }
+    
+    func removeCourse(){
+        guard let selectedCourse = selectedCourse else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return  }
+        
+        
+        let index = seats.firstIndex(of: selectedCourse)!
+        ModifierController.shared.removeSeat(seat: selectedCourse)
+        
+        self.selectedCourse = nil
+        
+        //        need to do this so it reloads properly
+        if seats.count >= index - 1 {
+            
+            
+            if index - 1 <= 0 {
+                ModifierController.shared.ordersToMove = []
+                tableView.reloadData()
+            } else {
+                ModifierController.shared.ordersToMove = []
+                tableView.reloadData()
+                tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: index - 1), at: .bottom, animated: false)
+            }
+            
+            
+        } else {
+            ModifierController.shared.ordersToMove = []
+            tableView.reloadData()
+        }
+    }
+    
+    
     
     @IBAction func removeSeat(_ sender: Any) {
         guard let selectedSeat = selectedSeat else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return}
         let index = seats.firstIndex(of: selectedSeat)!
-        //        ModifierController.shared.ord
         ModifierController.shared.removeSeat(seat: selectedSeat)
         
         
@@ -302,18 +351,22 @@ class SeatsViewController: UIViewController {
         
         self.selectedSeat = nil
         
-        
+//        need to do this so it reloads properly
         if seats.count >= index - 1 {
-            //            seats.compactMap({$0.seatNumber = seats.firstIndex(of: $0)! + 1})
+           
+            
             if index - 1 <= 0 {
+                ModifierController.shared.ordersToMove = []
                 tableView.reloadData()
             } else {
+                ModifierController.shared.ordersToMove = []
                 tableView.reloadData()
                 tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: index - 1), at: .bottom, animated: false)
             }
             
             
         } else {
+            ModifierController.shared.ordersToMove = []
             tableView.reloadData()
         }
     }
@@ -334,7 +387,7 @@ class SeatsViewController: UIViewController {
         }
         
         
-        //selectedOrder == nil ? (selectedOrder = food) : (selectedOrder = selectedOrder)
+        ModifierController.shared.ordersToMove = []
         tableView.reloadData()
         tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         self.selectedOrder = nil
@@ -347,8 +400,9 @@ class SeatsViewController: UIViewController {
     @IBAction func removeMod(_ sender: Any) {
         guard selectedOrder != nil && selectedOrder!.totalMods.count != 0 else {print("🔥❇️>>>\(#file) \(#line): guard ket failed<<<"); return }
         ModifierController.shared.removeModFromOrder(modifierUUID: potato!.uuid, fromModifier: selectedOrder! )
-        //        ModifierController.shared.removeMod(uuid: cheese!.uuid, fromModifier: dict[selectedOrder!.uuid + potato!.uuid]! as! Modifier)
+    
         print("🧠Blah delete")
+        ModifierController.shared.ordersToMove = []
         reloadAndScroll()
     }
     
@@ -375,19 +429,67 @@ class SeatsViewController: UIViewController {
 //orderMoving
 extension SeatsViewController {
     
+    func createNewCourse(){
+        let newCourse = Seat(seatnumber: 0, isCourse: true, name: "course" + " \(seats.count)")
+        
+        SeatsController.shared.seats.insert(newCourse, at: 0)
+        selectedCourse = newCourse
+        
+        
+    }
     
     
     
     func createNewSeat(){
-        //        seats.append(Seat(seatnumber: seats.count + 1))
-        let newSeat = Seat(seatnumber: seats.count + 1)
+        let newSeat = Seat(seatnumber: seats.count + 1, isCourse: false, name: "\(seats.count + 1)")
         print("🤚\(newSeat.seatNumber)")
         SeatsController.shared.seats.append(newSeat)
         selectedSeat = newSeat
         
     }
     
-    
+    @objc func assignSeatTo(_ seat:UIButton){
+        selectedCourse = seats[seat.tag]
+        if selectedSeat != nil {
+  
+            
+            let indexOfSelectedSeat2 = seats.firstIndex(of: selectedSeat!)!
+            let indexOfSelectedCourse2 = seats.firstIndex(of: selectedCourse!)!
+            
+            var pocket : [Seat] = []
+//            if the selected course ISNT the last section of seats then do this vv
+            if indexOfSelectedCourse2 < seats.count - 1{
+                
+                for i in seats[indexOfSelectedCourse2 + 1...seats.count - 1] {
+                    
+                    let indexOfi = seats.firstIndex(of: i)!
+//                    remove everything from the selected seat onwards from seats and append to pocket
+                    SeatsController.shared.seats.remove(at: indexOfi)
+                    pocket.append(i)
+                    
+                }
+//                remove the selected seat and selected course from pocket and from seats
+                pocket.removeAll(where: {$0 == selectedSeat || $0 == selectedCourse})
+                SeatsController.shared.seats.removeAll(where: {$0 == selectedSeat || $0 == selectedCourse})
+//                append selected course to seats
+                SeatsController.shared.seats.append(selectedCourse!)
+                //append selected seat right after selected course
+                SeatsController.shared.seats.append(selectedSeat!)
+                // then append the rest of the seats and courses (pocket)
+                SeatsController.shared.seats.append(contentsOf: pocket)
+                
+                
+            }
+            // if the selected course is the last item in seats then...
+            else if indexOfSelectedCourse2 == seats.count - 1{
+                //remove the selected seat from seats
+                SeatsController.shared.seats.remove(at: indexOfSelectedSeat2)
+                //and append it to the end of seats
+                SeatsController.shared.seats.append(selectedSeat!)
+            }
+        }
+        tableView.reloadData()
+    }
     
     @objc func assignOrderTo(_ seat:UIButton){
         selectedSeat = seats[seat.tag]
@@ -476,19 +578,41 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         //this will add a button to our section headers for us to send orders to
+        
+        
         let addButton = UIButton()
         
-        addButton.setTitle("Seat \(seats[section].seatNumber)", for: .normal)
+        if seats[section].isCourse == false {
+            addButton.setTitle("Seat \(seats[section].seatNumber)", for: .normal)
+            
+            //if the section is selected, it will turn brown
+            addButton.backgroundColor = seats[section] == selectedSeat ? .brown : .red
+            
+            //the tag number will be the same number as the section number
+            addButton.tag = section
+            addButton.showsTouchWhenHighlighted = true
+            addButton.addTarget(self, action: #selector(assignOrderTo(_:)), for: .touchUpInside)
+            
+        } else {
+            
+            addButton.setTitle("course \(seats[section].name)", for: .normal)
+            
+            //if the section is selected, it will turn brown
+            addButton.backgroundColor = seats[section] == selectedCourse ? .blue : .black
+            
+            //the tag number will be the same number as the section number
+            addButton.tag = section
+            addButton.showsTouchWhenHighlighted = true
+            
+            addButton.addTarget(self, action: #selector(assignSeatTo(_:)), for: .touchUpInside)
+        }
         
-        //if the section is selected, it will turn brown
-        addButton.backgroundColor = seats[section] == selectedSeat ? .brown : .red
-        
-        //the tag number will be the same number as the section number
-        addButton.tag = section
-        addButton.showsTouchWhenHighlighted = true
-        addButton.addTarget(self, action: #selector(assignOrderTo(_:)), for: .touchUpInside)
         
         return addButton
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 100
     }
     
     
@@ -831,6 +955,7 @@ extension SeatsViewController: UITableViewDelegate, UITableViewDataSource {
 //unused
 //Mark: new order item Alert
 extension SeatsViewController {
+//    probably doesnt do anything
     @IBAction private func addNewOrderItemAlert(_ sender: Any) {
         addNewItemAlert()
     }
